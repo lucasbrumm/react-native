@@ -1,5 +1,4 @@
 import {
-  Alert,
   Image,
   StatusBar,
   StyleSheet,
@@ -8,16 +7,44 @@ import {
   View,
 } from 'react-native'
 import myImage from '../assets/images/nu-icon.png'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import TouchID from 'react-native-touch-id'
+import { configs } from '../configs/touchID'
 
 export default function FirstScreen() {
-  const [requestPassword, setRequestPassword] = useState(false)
+  const [supported, setSupported] = useState(false)
+
+  useEffect(() => {
+    authenticate()
+  }, [])
+
+  const authenticate = () => {
+    TouchID.isSupported()
+      .then((success) => {
+        console.log('sucess :>> ', success)
+        setSupported(true)
+      })
+      .catch((error) => {
+        console.log('error touch: ', error)
+        alert('Touch ID não suportado')
+      })
+  }
+
+  const handleLogin = () => {
+    TouchID.authenticate('', configs)
+      .then((sucess: any) => {
+        console.log('sucesso', sucess)
+      })
+      .catch((error: any) => {
+        console.log('falha na autenticação', error)
+      })
+  }
 
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor='#820ad1' barStyle='light-content'></StatusBar>
       <Image source={myImage} style={{ width: 150, height: 150 }} />
-      <TouchableOpacity style={styles.buttonUsePassword}>
+      <TouchableOpacity style={styles.buttonUsePassword} onPress={handleLogin}>
         <Text style={styles.textButtonPassword}>Usar senha do celular</Text>
       </TouchableOpacity>
     </View>
