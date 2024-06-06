@@ -12,10 +12,13 @@ import TouchID from 'react-native-touch-id'
 import { configs } from '../configs/touchID'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
+import FunctionsAccount from '@/components/FunctionsAccount'
+import { urlPix } from '@/components/IconPix'
+
 export default function FirstScreen() {
-  const [supported, setSupported] = useState(false)
-  const [authenticated, setAuthenticated] = useState(false)
-  const [closeMoney, setCloseMoney] = useState(false)
+  const [supported, setSupported] = useState<boolean>(false)
+  const [authenticated, setAuthenticated] = useState<boolean>(false)
+  const [closeMoney, setCloseMoney] = useState<boolean>(false)
   const [balance, setBalance] = useState<string>('589,48')
 
   useEffect(() => {
@@ -110,6 +113,7 @@ export default function FirstScreen() {
               <Text style={styles.textUser}>Olá, usuário</Text>
             </View>
           </View>
+
           <ScrollView>
             <View style={styles.accountPadding}>
               <TouchableOpacity style={styles.accountContainer}>
@@ -117,10 +121,20 @@ export default function FirstScreen() {
                   <Text style={styles.textAccount}>Conta</Text>
                   <Text style={styles.textAccount}>{`R$ ${balance}`}</Text>
                 </View>
-                <FontAwesome name='chevron-right' size={15} color={'black'} />
+                <FontAwesome name='angle-right' size={15} color={'black'} />
               </TouchableOpacity>
             </View>
+            <ScrollView
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+            >
+              <FunctionsAccount />
+            </ScrollView>
           </ScrollView>
+
+          <View style={styles.myCards}>
+            <Text>Meus cartões</Text>
+          </View>
         </View>
       )}
     </Fragment>
@@ -177,9 +191,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 20,
   },
-  containerTextUser: {
-    // backgroundColor: 'red',
-  },
+  containerTextUser: {},
   textUser: {
     color: '#FFF',
     fontSize: 18,
@@ -197,5 +209,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  userFuncitons: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  myCards: {
+    backgroundColor: '#e6e6e6',
   },
 })
