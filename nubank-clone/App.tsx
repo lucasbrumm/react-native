@@ -6,10 +6,12 @@ import FirstScreen from './src/pages/FirstScreen'
 import Home from './src/pages/Home'
 import { Provider } from 'react-redux'
 import { store } from './src/redux/store'
+import PageUsePassword from './src/pages/PageUsePassword'
 
 export type RootStackParamList = {
   Home: undefined
   FirstScreen: undefined
+  PageUsePassword: undefined
 }
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
@@ -29,6 +31,19 @@ export default function App() {
             component={Home}
             options={{
               headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name='PageUsePassword'
+            component={PageUsePassword}
+            options={{
+              statusBarColor: 'black',
+              statusBarStyle: 'auto',
+              headerStyle: {
+                backgroundColor: 'black',
+              },
+              headerTitle: '',
+              headerBackVisible: false,
             }}
           />
         </Stack.Navigator>

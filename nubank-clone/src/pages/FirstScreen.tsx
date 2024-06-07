@@ -26,10 +26,14 @@ export default function FirstScreen() {
     (state: RootState) => state.isAuthenticated
   )
   const [supported, setSupported] = useState<boolean>(false)
-  // const [authenticated, setAuthenticated] = useState<boolean>(false)
+  const [usePassword, setUsePassword] = useState<boolean>(false)
 
   useEffect(() => {
     if (isFocused) authenticate()
+    else {
+      setUsePassword(false)
+      setSupported(false)
+    }
   }, [isFocused])
 
   const authenticate = () => {
@@ -40,7 +44,6 @@ export default function FirstScreen() {
       })
       .catch((error) => {
         console.log('error touch: ', error)
-        alert('Touch ID não suportado')
       })
   }
 
@@ -59,11 +62,11 @@ export default function FirstScreen() {
   const handleLogin = () => {
     TouchID.authenticate('', configs)
       .then((sucess: any) => {
-        // setAuthenticated(true)
         dispatch(setAuthentication(true))
       })
       .catch((error: any) => {
         console.log('falha na autenticação', error)
+        setUsePassword(true)
       })
   }
 
@@ -81,11 +84,26 @@ export default function FirstScreen() {
           style={{ width: 150, height: 150 }}
         />
         <TouchableOpacity
-          style={styles.buttonUsePassword}
+          style={
+            usePassword
+              ? { ...styles.buttonUsePassword, bottom: '8%' }
+              : styles.buttonUsePassword
+          }
           onPress={handleLogin}
         >
           <Text style={styles.textButtonPassword}>Usar senha do celular</Text>
         </TouchableOpacity>
+
+        {usePassword && (
+          <TouchableOpacity
+            style={styles.buttonUsePasswordNubank}
+            onPress={() => navigation.navigate('PageUsePassword')}
+          >
+            <Text style={styles.textButtonPasswordNubank}>
+              Usar senha do Nubank
+            </Text>
+          </TouchableOpacity>
+        )}
       </View>
     </Fragment>
   )
@@ -104,7 +122,12 @@ const styles = StyleSheet.create({
     resizeMode: 'stretch',
   },
   buttonUsePassword: {
-    backgroundColor: 'white',
+    backgroundColor: '#e6e6e6',
+    borderRadius: 25,
+    position: 'absolute',
+    bottom: '2%',
+  },
+  buttonUsePasswordNubank: {
     borderRadius: 25,
     position: 'absolute',
     bottom: '2%',
@@ -112,6 +135,11 @@ const styles = StyleSheet.create({
   textButtonPassword: {
     paddingVertical: 15,
     paddingHorizontal: '25%',
+  },
+  textButtonPasswordNubank: {
+    paddingVertical: 15,
+    paddingHorizontal: '25%',
+    color: '#e6e6e6',
   },
   containerAutenticado: {
     flex: 1,

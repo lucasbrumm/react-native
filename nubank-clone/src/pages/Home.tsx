@@ -79,6 +79,14 @@ export default function Home() {
     })
   }
 
+  const showPassword = () => {
+    return closeMoney ? (
+      <FontAwesome name='eye' size={25} color={'#FFF'} />
+    ) : (
+      <FontAwesome name='eye-slash' size={25} color={'#FFF'} />
+    )
+  }
+
   return (
     <View style={styles.containerAutenticado}>
       <StatusBar backgroundColor='#820ad1' barStyle='light-content'></StatusBar>
@@ -93,11 +101,7 @@ export default function Home() {
           />
           <View style={styles.iconsHeader}>
             <TouchableOpacity onPress={() => setCloseMoney(!closeMoney)}>
-              {closeMoney ? (
-                <FontAwesome name='eye' size={25} color={'#FFF'} />
-              ) : (
-                <FontAwesome name='eye-slash' size={25} color={'#FFF'} />
-              )}
+              {showPassword()}
             </TouchableOpacity>
             <TouchableOpacity>
               <FontAwesome name='question-circle' size={25} color={'#FFF'} />
@@ -141,6 +145,7 @@ export default function Home() {
           <FunctionsAccount />
         </ScrollView>
 
+        {/* card meus cartoes */}
         <View style={styles.myCardsContainer}>
           <TouchableOpacity style={styles.myCards}>
             <FontAwesome name='credit-card' size={15} color={'black'} />
@@ -148,6 +153,7 @@ export default function Home() {
           </TouchableOpacity>
         </View>
 
+        {/* card banners */}
         <View style={styles.bannerContainer}>
           <View style={styles.banners}>
             <Banners balance={user.moneyLoan.loanLimit} />
