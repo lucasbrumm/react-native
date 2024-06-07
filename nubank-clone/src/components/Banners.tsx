@@ -5,15 +5,17 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import { BannersInterface } from '../interfaces/BannerInterface'
+import { BannersInterface, BannersProps } from '../interfaces/BannerInterface'
+import { useState } from 'react'
+import Icon from 'react-native-vector-icons/Entypo'
 
-export default function Banners({ balance }) {
-  const screenWidth = Dimensions.get('window').width
-
+export default function Banners({ balance }: BannersProps) {
   const banners: BannersInterface[] = [
     {
       id: 1,
-      label: `Você tem até RS ${balance} disponíveis para empréstimo.`,
+      balance: balance,
+      label: `Você tem até RS disponíveis para empréstimo R$ `,
+      label2: ` disponíveis para empréstimo.`,
     },
     {
       id: 2,
@@ -24,29 +26,62 @@ export default function Banners({ balance }) {
       label: 'Convide amigos para o Nubank e desbloqueie brasões incríveis.',
     },
   ]
+  const [currentPage, setCurrentPage] = useState<number>(0)
+
+  const screenWidth = Dimensions.get('window').width
+
+  const handleScroll = (event: any) => {
+    const newPage = Math.round(event.nativeEvent.contentOffset.x / screenWidth)
+    setCurrentPage(newPage)
+  }
+
+  const returnDotPage = () => {
+    const dots = new Array(banners.length).fill(0)
+    return dots.map((_, index) => {
+      return (
+        <Text
+          key={index}
+          style={{ color: index === currentPage ? '#000' : '#888' }}
+        >
+          <Icon name='dot-single' />
+        </Text>
+      )
+    })
+  }
 
   return (
-    <ScrollView
-      horizontal={true}
-      pagingEnabled={true}
-      showsHorizontalScrollIndicator={false}
-    >
-      {banners.map((banner) => {
-        return (
-          <TouchableOpacity
-            key={banner.id}
-            style={{
-              width: screenWidth,
-              //   alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <View style={{ maxWidth: '60%', backgroundColor: 'blue' }}>
-              <Text>{banner.label}</Text>
-            </View>
-          </TouchableOpacity>
-        )
-      })}
-    </ScrollView>
+    <View>
+      <ScrollView
+        horizontal={true}
+        pagingEnabled={true}
+        showsHorizontalScrollIndicator={false}
+        onScroll={handleScroll}
+        scrollEventThrottle={16}
+      >
+        {banners.map((banner) => {
+          return (
+            <TouchableOpacity key={banner.id} style={{}}>
+              <View
+                style={{
+                  width: screenWidth,
+                  padding: 20,
+                  justifyContent: 'center',
+                  borderRadius: 15,
+                }}
+              >
+                <View style={{ maxWidth: '60%' }}>
+                  <Text>
+                    {banner.label}
+                    <Text style={{ fontWeight: 'bold' }}>{banner.balance}</Text>
+                    {banner.label2}
+                  </Text>
+                </View>
+              </View>
+            </TouchableOpacity>
+          )
+        })}
+      </ScrollView>
+      <Text style={{ textAlign: 'center' }}>{returnDotPage()}</Text>
+    </View>
   )
 }

@@ -87,7 +87,7 @@ export default function Home() {
         </View>
       </View>
 
-      <ScrollView style={{ backgroundColor: 'red' }}>
+      <ScrollView>
         <View style={styles.accountPadding}>
           <TouchableOpacity style={styles.accountContainer}>
             <View style={styles.textAccountContainer}>
@@ -204,15 +204,14 @@ const styles = StyleSheet.create({
   },
   bannerContainer: {
     display: 'flex',
-    padding: 20,
+    paddingHorizontal: 20,
   },
   banners: {
     backgroundColor: '#e6e6e6',
-    padding: 20,
-    borderRadius: 15,
     display: 'flex',
     flexDirection: 'row',
     gap: 20,
     alignItems: 'center',
+    borderRadius: 15,
   },
 })
