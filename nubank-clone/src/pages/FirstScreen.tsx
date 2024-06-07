@@ -12,9 +12,8 @@ import TouchID from 'react-native-touch-id'
 import { configs } from '../configs/touchID'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
-import FunctionsAccount from '@/components/FunctionsAccount'
-import { urlPix } from '@/components/IconPix'
-import Banners from '@/components/Banners'
+import Banners from '../components/Banners'
+import FunctionsAccount from '../components/FunctionsAccount'
 
 export default function FirstScreen() {
   const [supported, setSupported] = useState<boolean>(false)

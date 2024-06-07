@@ -1,4 +1,4 @@
-package com.joakin16.nubankclone
+package com.joakin16.testetypescript
 
 import android.os.Build
 import android.os.Bundle

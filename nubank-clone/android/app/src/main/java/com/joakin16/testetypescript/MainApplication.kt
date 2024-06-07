@@ -1,4 +1,4 @@
-package com.joakin16.nubankclone
+package com.joakin16.testetypescript
 
 import android.app.Application
 import android.content.res.Configuration
