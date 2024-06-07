@@ -1,7 +1,19 @@
 import { Text, View } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import { capitalizeFirstLetter } from '../utils/helper'
 
-export default function ProximoPagamento() {
+export default function ProximoPagamento({
+  invoiceDate,
+}: {
+  invoiceDate: Date
+}) {
+  const formattedDate = () => {
+    const options = { weekday: 'long', day: 'numeric', month: 'short' }
+    return capitalizeFirstLetter(
+      invoiceDate.toLocaleDateString('pt-BR', options)
+    )
+  }
+
   return (
     <View style={{ display: 'flex', gap: 10 }}>
       <View
@@ -22,7 +34,7 @@ export default function ProximoPagamento() {
           flexDirection: 'column',
         }}
       >
-        <Text>Segunda-feira, 17 Jun</Text>
+        <Text>{formattedDate()}</Text>
       </View>
     </View>
   )

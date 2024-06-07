@@ -7,53 +7,25 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
 import Banners from '../components/Banners'
 import FunctionsAccount from '../components/FunctionsAccount'
-import { imageUser } from '../common/base64Images'
 import { User } from '../interfaces/UserInterface'
-import { CardTypeEnum } from '../enums/CardTypeEnum'
-import { useSelector } from 'react-redux'
-import { RootState } from '../redux/store'
 import { getUser } from '../services/user'
 import Emprestimo from '../components/Emprestimo'
 import ProximoPagamento from '../components/ProximoPagamento'
 import DescubraMais from '../components/DescubraMais'
 import CreditCardComponent from '../components/CreditCardComponent'
+import { returnShowValues } from '../utils/helper'
 
 export default function Home() {
-  const isAuthenticated = useSelector(
-    (state: RootState) => state.isAuthenticated
-  )
-
   const [user, setUser] = useState<User>(getUser())
-
-  const [closeMoney, setCloseMoney] = useState<boolean>(false)
-
-  const returnShowMoney = () => {
-    const dots = new Array(4).fill(0)
-    return dots.map((_, index) => {
-      return (
-        <View
-          key={index}
-          style={{
-            width: 10,
-            height: 10,
-            borderRadius: 5,
-            backgroundColor: 'black',
-            margin: 2,
-          }}
-        >
-          <Text style={{ fontSize: 30, fontWeight: 'bold' }}>.</Text>
-        </View>
-      )
-    })
-  }
+  const [closeValues, setCloseValues] = useState<boolean>(false)
 
   const showPassword = () => {
-    return closeMoney ? (
+    return closeValues ? (
       <FontAwesome name='eye' size={25} color={'#FFF'} />
     ) : (
       <FontAwesome name='eye-slash' size={25} color={'#FFF'} />
@@ -73,7 +45,7 @@ export default function Home() {
             }}
           />
           <View style={styles.iconsHeader}>
-            <TouchableOpacity onPress={() => setCloseMoney(!closeMoney)}>
+            <TouchableOpacity onPress={() => setCloseValues(!closeValues)}>
               {showPassword()}
             </TouchableOpacity>
             <TouchableOpacity>
@@ -95,7 +67,7 @@ export default function Home() {
           <TouchableOpacity style={styles.accountContainer}>
             <View style={styles.textAccountContainer}>
               <Text style={styles.textAccount}>Conta</Text>
-              {!closeMoney ? (
+              {!closeValues ? (
                 <View
                   style={{
                     display: 'flex',
@@ -103,7 +75,7 @@ export default function Home() {
                     paddingVertical: 5,
                   }}
                 >
-                  {returnShowMoney()}
+                  {returnShowValues()}
                 </View>
               ) : (
                 <Text style={styles.textAccount}>
@@ -136,17 +108,22 @@ export default function Home() {
 
         {/* creditCard */}
         <TouchableOpacity style={styles.cardCreditCard}>
-          <CreditCardComponent creditCard={user.creditCard} />
+          <CreditCardComponent
+            creditCard={user.creditCard}
+            closeValues={closeValues}
+          />
         </TouchableOpacity>
 
         {/* card empréstimo */}
         <TouchableOpacity style={styles.cardCreditCard}>
-          <Emprestimo />
+          <Emprestimo moneyLoan={user.moneyLoan} closeValues={closeValues} />
         </TouchableOpacity>
 
         {/* Proximo pagamento */}
         <TouchableOpacity style={styles.cardCreditCard}>
-          <ProximoPagamento />
+          <ProximoPagamento
+            invoiceDate={user.creditCard.creditCardBill.invoiceDate}
+          />
         </TouchableOpacity>
 
         {/* Descubra mais */}

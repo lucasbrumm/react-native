@@ -1,11 +1,14 @@
 import { Text, View } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { CreditCard } from '../interfaces/CreditCardInterface'
+import { useEffect } from 'react'
 
 export default function CreditCardComponent({
   creditCard,
+  closeValues,
 }: {
   creditCard: CreditCard
+  closeValues: boolean
 }) {
   return (
     <View style={{ display: 'flex', gap: 10 }}>
