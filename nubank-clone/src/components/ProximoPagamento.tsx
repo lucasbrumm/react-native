@@ -8,7 +8,11 @@ export default function ProximoPagamento({
   invoiceDate: Date
 }) {
   const formattedDate = () => {
-    const options = { weekday: 'long', day: 'numeric', month: 'short' }
+    const options: Intl.DateTimeFormatOptions = {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'short',
+    }
     return capitalizeFirstLetter(
       invoiceDate.toLocaleDateString('pt-BR', options)
     )

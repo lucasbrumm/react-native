@@ -1,12 +1,4 @@
-import {
-  Image,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import { ScrollView, StatusBar, View } from 'react-native'
 import { useState } from 'react'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
@@ -35,7 +27,7 @@ export default function Home() {
   }
 
   return (
-    <View style={styles.containerAutenticado}>
+    <View>
       <StatusBar backgroundColor='#820ad1' barStyle='light-content'></StatusBar>
 
       <Header
@@ -80,60 +72,3 @@ export default function Home() {
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#820ad1',
-  },
-  nubankImage: {
-    width: 150,
-    height: 150,
-    resizeMode: 'stretch',
-  },
-  buttonUsePassword: {
-    backgroundColor: 'white',
-    borderRadius: 25,
-    position: 'absolute',
-    bottom: '2%',
-  },
-  textButtonPassword: {
-    paddingVertical: 15,
-    paddingHorizontal: '25%',
-  },
-  containerAutenticado: {
-    flex: 1,
-  },
-  header: {
-    height: '15%',
-    backgroundColor: '#820ad1',
-    display: 'flex',
-    justifyContent: 'space-around',
-    paddingHorizontal: 15,
-  },
-  imageAndOptions: {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  imageUser: {
-    borderRadius: 25,
-    width: 50,
-    height: 50,
-  },
-  iconsHeader: {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 20,
-  },
-  containerTextUser: {},
-  textUser: {
-    color: '#FFF',
-    fontSize: 18,
-  },
-})
