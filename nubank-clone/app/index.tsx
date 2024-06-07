@@ -14,6 +14,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
 import FunctionsAccount from '@/components/FunctionsAccount'
 import { urlPix } from '@/components/IconPix'
+import Banners from '@/components/Banners'
 
 export default function FirstScreen() {
   const [supported, setSupported] = useState<boolean>(false)
@@ -133,22 +134,17 @@ export default function FirstScreen() {
               <FunctionsAccount />
             </ScrollView>
 
-            <View style={styles.myCards}>
-              <TouchableOpacity
-                style={{
-                  backgroundColor: '#e6e6e6',
-                  paddingVertical: 20,
-                  paddingHorizontal: 20,
-                  borderRadius: 15,
-                  display: 'flex',
-                  flexDirection: 'row',
-                  gap: 20,
-                  alignItems: 'center',
-                }}
-              >
+            <View style={styles.myCardsContainer}>
+              <TouchableOpacity style={styles.myCards}>
                 <FontAwesome name='credit-card' size={15} color={'black'} />
                 <Text>Meus cartões</Text>
               </TouchableOpacity>
+            </View>
+
+            <View style={styles.bannerContainer}>
+              <View style={styles.banners}>
+                <Banners />
+              </View>
             </View>
           </ScrollView>
         </View>
@@ -225,8 +221,30 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  myCards: {
+  myCardsContainer: {
     display: 'flex',
     padding: 20,
+  },
+  myCards: {
+    backgroundColor: '#e6e6e6',
+    padding: 20,
+    borderRadius: 15,
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 20,
+    alignItems: 'center',
+  },
+  bannerContainer: {
+    display: 'flex',
+    padding: 20,
+  },
+  banners: {
+    backgroundColor: '#e6e6e6',
+    padding: 20,
+    borderRadius: 15,
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 20,
+    alignItems: 'center',
   },
 })

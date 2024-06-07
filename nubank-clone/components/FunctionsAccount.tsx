@@ -1,59 +1,67 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Fragment } from 'react'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import Icon3 from 'react-native-vector-icons/AntDesign'
 
 export default function FunctionsAccount() {
   const icons = [
     {
+      id: 1,
       name: 'dollar',
       color: 'black',
       size: 20,
       label: 'Área Pix',
     },
     {
+      id: 2,
       name: 'barcode',
       color: 'black',
       size: 20,
       label: 'Pagar',
     },
     {
+      id: 3,
       name: 'money',
       color: 'black',
       size: 20,
       label: 'Pegar emprestado',
     },
     {
+      id: 4,
       name: 'mobile-phone',
       color: 'black',
       size: 20,
       label: 'Recarga de celular',
     },
     {
+      id: 5,
       name: 'send-o',
       color: 'black',
       size: 20,
       label: 'Transferir',
     },
     {
+      id: 6,
       name: 'inbox',
       color: 'black',
       size: 20,
       label: 'Caixinhas',
     },
     {
+      id: 7,
       name: 'envelope-o',
       color: 'black',
       size: 20,
       label: 'Cobrar',
     },
     {
+      id: 8,
       name: 'btc',
       color: 'black',
       size: 20,
       label: 'Depositar',
     },
     {
+      id: 9,
       name: 'signal',
       color: 'black',
       size: 20,
@@ -62,9 +70,9 @@ export default function FunctionsAccount() {
   ]
   return (
     <Fragment>
-      {icons.map((icon, index) => {
+      {icons.map((icon) => {
         return (
-          <View key={index} style={styles.container}>
+          <View key={icon.id} style={styles.container}>
             <TouchableOpacity style={styles.icon}>
               <FontAwesome
                 name={icon.name}
@@ -76,7 +84,6 @@ export default function FunctionsAccount() {
           </View>
         )
       })}
-      <Icon3 name={'right'} size={20} color={'black'}></Icon3>
     </Fragment>
   )
 }
