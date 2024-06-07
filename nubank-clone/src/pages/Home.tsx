@@ -18,10 +18,10 @@ import { CardTypeEnum } from '../enums/CardTypeEnum'
 import { useSelector } from 'react-redux'
 import { RootState } from '../redux/store'
 import { getUser } from '../services/user'
-import CreditCard from '../components/CreditCard'
 import Emprestimo from '../components/Emprestimo'
 import ProximoPagamento from '../components/ProximoPagamento'
 import DescubraMais from '../components/DescubraMais'
+import CreditCardComponent from '../components/CreditCardComponent'
 
 export default function Home() {
   const isAuthenticated = useSelector(
@@ -136,7 +136,7 @@ export default function Home() {
 
         {/* creditCard */}
         <TouchableOpacity style={styles.cardCreditCard}>
-          <CreditCard />
+          <CreditCardComponent creditCard={user.creditCard} />
         </TouchableOpacity>
 
         {/* card empréstimo */}

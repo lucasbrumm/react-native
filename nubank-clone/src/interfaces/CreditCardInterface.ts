@@ -5,7 +5,7 @@ export interface CreditCard {
   balanceCard: string
   cards: Card[]
   limitCreditCard: string
-  creditCardBill: string
+  creditCardBill: CreditCardBill
 }
 
 interface Card {
@@ -17,4 +17,10 @@ interface Card {
 interface CardType {
   id: number
   type: CardTypeEnum
+}
+
+export interface CreditCardBill {
+  id: number
+  value: string
+  invoiceDate: Date
 }

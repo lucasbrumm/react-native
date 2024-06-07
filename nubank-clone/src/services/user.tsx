@@ -29,7 +29,11 @@ export function getUser(): User {
         },
       ],
       limitCreditCard: '2000,00',
-      creditCardBill: '858,00',
+      creditCardBill: {
+        id: 1,
+        value: '521,00',
+        invoiceDate: new Date(),
+      },
     },
     moneyLoan: {
       id: 1,

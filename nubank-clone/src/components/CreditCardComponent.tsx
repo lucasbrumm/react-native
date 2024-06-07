@@ -1,7 +1,12 @@
 import { Text, View } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import { CreditCard } from '../interfaces/CreditCardInterface'
 
-export default function CreditCard() {
+export default function CreditCardComponent({
+  creditCard,
+}: {
+  creditCard: CreditCard
+}) {
   return (
     <View style={{ display: 'flex', gap: 10 }}>
       <View
@@ -23,11 +28,15 @@ export default function CreditCard() {
         }}
       >
         <Text>Fatura atual</Text>
-        <Text>....</Text>
+        <Text
+          style={{ fontWeight: 'bold' }}
+        >{`R$ ${creditCard.creditCardBill.value}`}</Text>
       </View>
 
       <View>
-        <Text>{`Limite disponível de ...`}</Text>
+        <Text
+          style={{ fontSize: 12 }}
+        >{`Limite disponível de R$ ${creditCard?.limitCreditCard}`}</Text>
       </View>
     </View>
   )
