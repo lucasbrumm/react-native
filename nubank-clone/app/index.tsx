@@ -81,6 +81,7 @@ export default function FirstScreen() {
             backgroundColor='#820ad1'
             barStyle='light-content'
           ></StatusBar>
+
           <View style={styles.header}>
             <View style={styles.imageAndOptions}>
               <Image
@@ -114,7 +115,7 @@ export default function FirstScreen() {
             </View>
           </View>
 
-          <ScrollView>
+          <ScrollView style={{ backgroundColor: 'red' }}>
             <View style={styles.accountPadding}>
               <TouchableOpacity style={styles.accountContainer}>
                 <View style={styles.textAccountContainer}>
@@ -124,17 +125,32 @@ export default function FirstScreen() {
                 <FontAwesome name='angle-right' size={15} color={'black'} />
               </TouchableOpacity>
             </View>
+
             <ScrollView
               horizontal={true}
               showsHorizontalScrollIndicator={false}
             >
               <FunctionsAccount />
             </ScrollView>
-          </ScrollView>
 
-          <View style={styles.myCards}>
-            <Text>Meus cartões</Text>
-          </View>
+            <View style={styles.myCards}>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: '#e6e6e6',
+                  paddingVertical: 20,
+                  paddingHorizontal: 20,
+                  borderRadius: 15,
+                  display: 'flex',
+                  flexDirection: 'row',
+                  gap: 20,
+                  alignItems: 'center',
+                }}
+              >
+                <FontAwesome name='credit-card' size={15} color={'black'} />
+                <Text>Meus cartões</Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
         </View>
       )}
     </Fragment>
@@ -197,7 +213,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   accountPadding: {
-    padding: 15,
+    padding: 20,
   },
   textAccountContainer: {},
   textAccount: {
@@ -205,16 +221,12 @@ const styles = StyleSheet.create({
   },
   accountContainer: {
     display: 'flex',
-    width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  userFuncitons: {
-    display: 'flex',
-    flexDirection: 'row',
-  },
   myCards: {
-    backgroundColor: '#e6e6e6',
+    display: 'flex',
+    padding: 20,
   },
 })
