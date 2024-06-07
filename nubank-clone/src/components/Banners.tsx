@@ -12,7 +12,7 @@ export default function Banners() {
   const banners = [
     {
       id: 1,
-      label: 'Você tem até',
+      label: 'Você tem até ',
     },
     {
       id: 2,
