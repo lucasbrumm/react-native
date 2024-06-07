@@ -75,7 +75,7 @@ export default function Home() {
                     paddingVertical: 5,
                   }}
                 >
-                  {returnShowValues()}
+                  {returnShowValues(10)}
                 </View>
               ) : (
                 <Text style={styles.textAccount}>
@@ -87,6 +87,7 @@ export default function Home() {
           </TouchableOpacity>
         </View>
 
+        {/* functions account */}
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           <FunctionsAccount />
         </ScrollView>
@@ -102,7 +103,10 @@ export default function Home() {
         {/* card banners */}
         <View style={styles.bannerContainer}>
           <View style={styles.banners}>
-            <Banners balance={user?.moneyLoan.loanLimit} />
+            <Banners
+              balance={user?.moneyLoan.loanLimit}
+              closeValues={closeValues}
+            />
           </View>
         </View>
 

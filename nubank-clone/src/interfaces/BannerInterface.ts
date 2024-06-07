@@ -6,4 +6,5 @@ export interface BannersInterface {
 }
 export interface BannersProps {
   balance: string
+  closeValues: boolean
 }

@@ -1,6 +1,7 @@
 import { Text, View } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { MoneyLoan } from '../interfaces/MoneyLoanInterface'
+import { returnShowValues } from '../utils/helper'
 
 export default function Emprestimo({
   moneyLoan,
@@ -28,9 +29,21 @@ export default function Emprestimo({
         }}
       >
         <Text>Valor disponível de até</Text>
-        <Text
-          style={{ fontWeight: 'bold' }}
-        >{`R$ ${moneyLoan.loanLimit}`}</Text>
+        {!closeValues ? (
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              paddingVertical: 5,
+            }}
+          >
+            {returnShowValues(5)}
+          </View>
+        ) : (
+          <Text
+            style={{ fontWeight: 'bold' }}
+          >{`R$ ${moneyLoan.loanLimit}`}</Text>
+        )}
       </View>
     </View>
   )

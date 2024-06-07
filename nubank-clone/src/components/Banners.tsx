@@ -9,7 +9,7 @@ import { BannersInterface, BannersProps } from '../interfaces/BannerInterface'
 import { useState } from 'react'
 import Icon from 'react-native-vector-icons/Entypo'
 
-export default function Banners({ balance }: BannersProps) {
+export default function Banners({ balance, closeValues }: BannersProps) {
   const banners: BannersInterface[] = [
     {
       id: 1,
