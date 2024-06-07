@@ -9,14 +9,24 @@ import {
 import { Fragment, useEffect, useState } from 'react'
 import TouchID from 'react-native-touch-id'
 import { configs } from '../configs/touchID'
-import { useIsFocused, useNavigation } from '@react-navigation/native'
+import {
+  CommonActions,
+  useIsFocused,
+  useNavigation,
+} from '@react-navigation/native'
 import { nubankLogo } from '../common/base64Images'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState, setAuthentication } from '../redux/store'
 
 export default function FirstScreen() {
   const isFocused = useIsFocused()
   const navigation = useNavigation()
+  const dispatch = useDispatch()
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.isAuthenticated
+  )
   const [supported, setSupported] = useState<boolean>(false)
-  const [authenticated, setAuthenticated] = useState<boolean>(false)
+  // const [authenticated, setAuthenticated] = useState<boolean>(false)
 
   useEffect(() => {
     if (isFocused) authenticate()
@@ -35,17 +45,22 @@ export default function FirstScreen() {
   }
 
   useEffect(() => {
-    console.log('authenticated', authenticated)
-    if (authenticated) {
+    if (isAuthenticated) {
       navigation.navigate('Home')
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ name: 'Home' }],
+        })
+      )
     }
-  }, [authenticated])
+  }, [isAuthenticated])
 
   const handleLogin = () => {
     TouchID.authenticate('', configs)
       .then((sucess: any) => {
-        setAuthenticated(true)
-        console.log('sucesso', sucess)
+        // setAuthenticated(true)
+        dispatch(setAuthentication(true))
       })
       .catch((error: any) => {
         console.log('falha na autenticação', error)

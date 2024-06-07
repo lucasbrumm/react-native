@@ -9,7 +9,6 @@ import {
 } from 'react-native'
 import { useState } from 'react'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import Icon from 'react-native-vector-icons/Entypo'
 
 import Banners from '../components/Banners'
 import FunctionsAccount from '../components/FunctionsAccount'

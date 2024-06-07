@@ -7,7 +7,7 @@ import Home from './src/pages/Home'
 import { Provider } from 'react-redux'
 import { store } from './src/redux/store'
 
-type RootStackParamList = {
+export type RootStackParamList = {
   Home: undefined
   FirstScreen: undefined
 }
@@ -20,16 +20,16 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
+            name='FirstScreen'
+            component={FirstScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
             name='Home'
             component={Home}
             options={{
               headerShown: false,
             }}
-          />
-          <Stack.Screen
-            name='FirstScreen'
-            component={FirstScreen}
-            options={{ headerShown: false }}
           />
         </Stack.Navigator>
       </NavigationContainer>
