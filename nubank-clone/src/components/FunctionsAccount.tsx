@@ -1,4 +1,10 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import { Fragment } from 'react'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { IconInterface } from '../interfaces/IconInterface'
@@ -71,7 +77,7 @@ export default function FunctionsAccount() {
   ]
 
   return (
-    <Fragment>
+    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
       {icons.map((icon) => {
         return (
           <View key={icon.id} style={styles.container}>
@@ -86,7 +92,7 @@ export default function FunctionsAccount() {
           </View>
         )
       })}
-    </Fragment>
+    </ScrollView>
   )
 }
 

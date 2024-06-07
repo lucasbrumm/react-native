@@ -1,7 +1,7 @@
 import { Text, View } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { CreditCard } from '../interfaces/CreditCardInterface'
-import { returnShowValues } from '../utils/helper'
+import { returnDotValues } from '../utils/helper'
 
 export default function CreditCardComponent({
   creditCard,
@@ -39,7 +39,7 @@ export default function CreditCardComponent({
               paddingVertical: 5,
             }}
           >
-            {returnShowValues(5)}
+            {returnDotValues(5)}
           </View>
         ) : (
           <Text

@@ -18,7 +18,9 @@ import Emprestimo from '../components/Emprestimo'
 import ProximoPagamento from '../components/ProximoPagamento'
 import DescubraMais from '../components/DescubraMais'
 import CreditCardComponent from '../components/CreditCardComponent'
-import { returnShowValues } from '../utils/helper'
+import { returnDotValues } from '../utils/helper'
+import AccountBalance from '../components/AccountBalance'
+import MyCards from '../components/MyCards'
 
 export default function Home() {
   const [user, setUser] = useState<User>(getUser())
@@ -62,54 +64,20 @@ export default function Home() {
       </View>
 
       <ScrollView>
-        <View style={styles.accountPadding}>
-          {/* account */}
-          <TouchableOpacity style={styles.accountContainer}>
-            <View style={styles.textAccountContainer}>
-              <Text style={styles.textAccount}>Conta</Text>
-              {!closeValues ? (
-                <View
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    paddingVertical: 5,
-                  }}
-                >
-                  {returnShowValues(10)}
-                </View>
-              ) : (
-                <Text style={styles.textAccount}>
-                  {`R$ ${user?.account.balance}`}
-                </Text>
-              )}
-            </View>
-            <FontAwesome name='angle-right' size={15} color={'black'} />
-          </TouchableOpacity>
-        </View>
+        {/* account card*/}
+        <AccountBalance account={user.account} closeValues={closeValues} />
 
         {/* functions account */}
-        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          <FunctionsAccount />
-        </ScrollView>
+        <FunctionsAccount />
 
         {/* card meus cartoes */}
-        <View style={styles.myCardsContainer}>
-          <TouchableOpacity style={styles.myCards}>
-            <FontAwesome name='credit-card' size={15} color={'black'} />
-            <Text>Meus cartões</Text>
-          </TouchableOpacity>
-        </View>
+        <MyCards />
 
         {/* card banners */}
-        <View style={styles.bannerContainer}>
-          <View style={styles.banners}>
-            <Banners
-              balance={user?.moneyLoan.loanLimit}
-              closeValues={closeValues}
-            />
-          </View>
-        </View>
-
+        <Banners
+          balance={user?.moneyLoan.loanLimit}
+          closeValues={closeValues}
+        />
         {/* creditCard */}
         <TouchableOpacity style={styles.cardCreditCard}>
           <CreditCardComponent
@@ -207,36 +175,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  myCardsContainer: {
-    display: 'flex',
-    padding: 20,
-  },
-  myCards: {
-    backgroundColor: '#e6e6e6',
-    padding: 20,
-    borderRadius: 15,
-    display: 'flex',
-    flexDirection: 'row',
-    gap: 20,
-    alignItems: 'center',
-  },
-  bannerContainer: {
-    display: 'flex',
-    paddingHorizontal: 20,
-    marginBottom: 20,
-  },
-  banners: {
-    backgroundColor: '#e6e6e6',
-    display: 'flex',
-    flexDirection: 'row',
-    gap: 20,
-    alignItems: 'center',
-    borderRadius: 15,
-  },
+
   cardCreditCard: {
     borderColor: 'gray',
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
+    borderTopWidth: 0.5,
     padding: 20,
   },
 })

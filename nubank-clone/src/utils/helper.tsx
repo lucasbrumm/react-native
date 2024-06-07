@@ -4,12 +4,12 @@ export function capitalizeFirstLetter(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1)
 }
 
-export const returnShowValues = (widthHeight: Number) => {
+export const returnDotValues = (widthHeight: Number) => {
   const dots = new Array(4).fill(0)
   return dots.map((_, index) => {
     return (
       <View
-        key={index}
+        key={`${Date.now()}-${index}`}
         style={{
           width: widthHeight,
           height: widthHeight,

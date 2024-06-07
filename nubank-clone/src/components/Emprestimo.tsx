@@ -1,7 +1,7 @@
 import { Text, View } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { MoneyLoan } from '../interfaces/MoneyLoanInterface'
-import { returnShowValues } from '../utils/helper'
+import { returnDotValues } from '../utils/helper'
 
 export default function Emprestimo({
   moneyLoan,
@@ -37,7 +37,7 @@ export default function Emprestimo({
               paddingVertical: 5,
             }}
           >
-            {returnShowValues(5)}
+            {returnDotValues(5)}
           </View>
         ) : (
           <Text
