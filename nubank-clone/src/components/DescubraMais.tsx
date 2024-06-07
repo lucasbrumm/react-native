@@ -1,9 +1,15 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import { Fragment } from 'react'
 
 export default function DescubraMais() {
   return (
-    <Fragment>
+    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
       {/* {icons.map((icon) => {
         return (
           <View key={icon.id} style={styles.container}>
@@ -18,7 +24,7 @@ export default function DescubraMais() {
           </View>
         )
       })} */}
-    </Fragment>
+    </ScrollView>
   )
 }
 

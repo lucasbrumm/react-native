@@ -18,9 +18,9 @@ import Emprestimo from '../components/Emprestimo'
 import ProximoPagamento from '../components/ProximoPagamento'
 import DescubraMais from '../components/DescubraMais'
 import CreditCardComponent from '../components/CreditCardComponent'
-import { returnDotValues } from '../utils/helper'
 import AccountBalance from '../components/AccountBalance'
 import MyCards from '../components/MyCards'
+import Header from '../components/Header'
 
 export default function Home() {
   const [user, setUser] = useState<User>(getUser())
@@ -38,30 +38,12 @@ export default function Home() {
     <View style={styles.containerAutenticado}>
       <StatusBar backgroundColor='#820ad1' barStyle='light-content'></StatusBar>
 
-      <View style={styles.header}>
-        <View style={styles.imageAndOptions}>
-          <Image
-            style={styles.imageUser}
-            source={{
-              uri: user?.imageUser,
-            }}
-          />
-          <View style={styles.iconsHeader}>
-            <TouchableOpacity onPress={() => setCloseValues(!closeValues)}>
-              {showPassword()}
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <FontAwesome name='question-circle' size={25} color={'#FFF'} />
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <FontAwesome name='user-plus' size={25} color={'#FFF'} />
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={styles.containerTextUser}>
-          <Text style={styles.textUser}>{`Olá, ${user?.name}`}</Text>
-        </View>
-      </View>
+      <Header
+        user={user}
+        closeValues={closeValues}
+        setCloseValues={setCloseValues}
+        showPassword={showPassword}
+      />
 
       <ScrollView>
         {/* account card*/}
@@ -79,29 +61,21 @@ export default function Home() {
           closeValues={closeValues}
         />
         {/* creditCard */}
-        <TouchableOpacity style={styles.cardCreditCard}>
-          <CreditCardComponent
-            creditCard={user.creditCard}
-            closeValues={closeValues}
-          />
-        </TouchableOpacity>
+        <CreditCardComponent
+          creditCard={user.creditCard}
+          closeValues={closeValues}
+        />
 
         {/* card empréstimo */}
-        <TouchableOpacity style={styles.cardCreditCard}>
-          <Emprestimo moneyLoan={user.moneyLoan} closeValues={closeValues} />
-        </TouchableOpacity>
+        <Emprestimo moneyLoan={user.moneyLoan} closeValues={closeValues} />
 
         {/* Proximo pagamento */}
-        <TouchableOpacity style={styles.cardCreditCard}>
-          <ProximoPagamento
-            invoiceDate={user.creditCard.creditCardBill.invoiceDate}
-          />
-        </TouchableOpacity>
+        <ProximoPagamento
+          invoiceDate={user.creditCard.creditCardBill.invoiceDate}
+        />
 
         {/* Descubra mais */}
-        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          <DescubraMais />
-        </ScrollView>
+        <DescubraMais />
       </ScrollView>
     </View>
   )
@@ -161,24 +135,5 @@ const styles = StyleSheet.create({
   textUser: {
     color: '#FFF',
     fontSize: 18,
-  },
-  accountPadding: {
-    padding: 20,
-  },
-  textAccountContainer: {},
-  textAccount: {
-    fontSize: 18,
-  },
-  accountContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-
-  cardCreditCard: {
-    borderColor: 'gray',
-    borderTopWidth: 0.5,
-    padding: 20,
   },
 })
