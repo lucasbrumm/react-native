@@ -39,7 +39,7 @@ export default function FirstScreen() {
   const authenticate = () => {
     TouchID.isSupported()
       .then((success) => {
-        handleLogin()
+        // handleLogin()
         setSupported(true)
       })
       .catch((error) => {
