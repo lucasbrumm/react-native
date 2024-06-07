@@ -27,7 +27,7 @@ export default function Home() {
   }
 
   return (
-    <View style={{ flex: 1, paddingBottom: 20 }}>
+    <View style={{ flex: 1 }}>
       <StatusBar backgroundColor='#820ad1' barStyle='light-content'></StatusBar>
 
       <Header
