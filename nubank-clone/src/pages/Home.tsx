@@ -27,7 +27,7 @@ export default function Home() {
   }
 
   return (
-    <View>
+    <View style={{ flex: 1, paddingBottom: 20 }}>
       <StatusBar backgroundColor='#820ad1' barStyle='light-content'></StatusBar>
 
       <Header
@@ -37,7 +37,7 @@ export default function Home() {
         showPassword={showPassword}
       />
 
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         {/* account card*/}
         <AccountBalance account={user.account} closeValues={closeValues} />
 
