@@ -9,14 +9,21 @@ import {
 } from 'react-native'
 import { useState } from 'react'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import Icon from 'react-native-vector-icons/Entypo'
 
 import Banners from '../components/Banners'
 import FunctionsAccount from '../components/FunctionsAccount'
 import { imageUser } from '../common/base64Images'
 import { User } from '../interfaces/UserInterface'
 import { CardTypeEnum } from '../enums/CardTypeEnum'
+import { useSelector } from 'react-redux'
+import { RootState } from '../redux/store'
 
 export default function Home() {
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.isAuthenticated
+  )
+
   let user: User = {
     id: 1,
     cpf: '123.456.789-00',
@@ -52,7 +59,26 @@ export default function Home() {
   }
 
   const [closeMoney, setCloseMoney] = useState<boolean>(false)
-  const [balance, setBalance] = useState<string>('589,48')
+
+  const returnShowMoney = () => {
+    const dots = new Array(4).fill(0)
+    return dots.map((_, index) => {
+      return (
+        <View
+          key={index}
+          style={{
+            width: 10,
+            height: 10,
+            borderRadius: 5,
+            backgroundColor: 'black',
+            margin: 2,
+          }}
+        >
+          <Text style={{ fontSize: 30, fontWeight: 'bold' }}>.</Text>
+        </View>
+      )
+    })
+  }
 
   return (
     <View style={styles.containerAutenticado}>
@@ -92,9 +118,21 @@ export default function Home() {
           <TouchableOpacity style={styles.accountContainer}>
             <View style={styles.textAccountContainer}>
               <Text style={styles.textAccount}>Conta</Text>
-              <Text
-                style={styles.textAccount}
-              >{`R$ ${user.account.balance}`}</Text>
+              {!closeMoney ? (
+                <View
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    paddingVertical: 5,
+                  }}
+                >
+                  {returnShowMoney()}
+                </View>
+              ) : (
+                <Text style={styles.textAccount}>
+                  {`R$ ${user.account.balance}`}
+                </Text>
+              )}
             </View>
             <FontAwesome name='angle-right' size={15} color={'black'} />
           </TouchableOpacity>

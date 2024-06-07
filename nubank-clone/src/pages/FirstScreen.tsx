@@ -9,21 +9,23 @@ import {
 import { Fragment, useEffect, useState } from 'react'
 import TouchID from 'react-native-touch-id'
 import { configs } from '../configs/touchID'
-import { useNavigation } from '@react-navigation/native'
+import { useIsFocused, useNavigation } from '@react-navigation/native'
 import { nubankLogo } from '../common/base64Images'
 
 export default function FirstScreen() {
+  const isFocused = useIsFocused()
   const navigation = useNavigation()
   const [supported, setSupported] = useState<boolean>(false)
   const [authenticated, setAuthenticated] = useState<boolean>(false)
 
   useEffect(() => {
-    authenticate()
-  }, [])
+    if (isFocused) authenticate()
+  }, [isFocused])
 
   const authenticate = () => {
     TouchID.isSupported()
       .then((success) => {
+        handleLogin()
         setSupported(true)
       })
       .catch((error) => {
@@ -33,6 +35,7 @@ export default function FirstScreen() {
   }
 
   useEffect(() => {
+    console.log('authenticated', authenticated)
     if (authenticated) {
       navigation.navigate('Home')
     }

@@ -60,16 +60,16 @@ export default function Banners({ balance }: BannersProps) {
       >
         {banners.map((banner) => {
           return (
-            <TouchableOpacity key={banner.id} style={{}}>
+            <TouchableOpacity key={banner.id}>
               <View
                 style={{
-                  width: screenWidth,
+                  width: screenWidth - 40,
                   padding: 20,
                   justifyContent: 'center',
                   borderRadius: 15,
                 }}
               >
-                <View style={{ maxWidth: '60%' }}>
+                <View style={{ width: '100%' }}>
                   <Text>
                     {banner.label}
                     <Text style={{ fontWeight: 'bold' }}>{banner.balance}</Text>
