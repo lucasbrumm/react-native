@@ -18,6 +18,10 @@ import { CardTypeEnum } from '../enums/CardTypeEnum'
 import { useSelector } from 'react-redux'
 import { RootState } from '../redux/store'
 import { getUser } from '../services/user'
+import CreditCard from '../components/CreditCard'
+import Emprestimo from '../components/Emprestimo'
+import ProximoPagamento from '../components/ProximoPagamento'
+import DescubraMais from '../components/DescubraMais'
 
 export default function Home() {
   const isAuthenticated = useSelector(
@@ -87,6 +91,7 @@ export default function Home() {
 
       <ScrollView>
         <View style={styles.accountPadding}>
+          {/* account */}
           <TouchableOpacity style={styles.accountContainer}>
             <View style={styles.textAccountContainer}>
               <Text style={styles.textAccount}>Conta</Text>
@@ -128,6 +133,26 @@ export default function Home() {
             <Banners balance={user?.moneyLoan.loanLimit} />
           </View>
         </View>
+
+        {/* creditCard */}
+        <TouchableOpacity style={styles.cardCreditCard}>
+          <CreditCard />
+        </TouchableOpacity>
+
+        {/* card empréstimo */}
+        <TouchableOpacity style={styles.cardCreditCard}>
+          <Emprestimo />
+        </TouchableOpacity>
+
+        {/* Proximo pagamento */}
+        <TouchableOpacity style={styles.cardCreditCard}>
+          <ProximoPagamento />
+        </TouchableOpacity>
+
+        {/* Descubra mais */}
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+          <DescubraMais />
+        </ScrollView>
       </ScrollView>
     </View>
   )
@@ -217,6 +242,7 @@ const styles = StyleSheet.create({
   bannerContainer: {
     display: 'flex',
     paddingHorizontal: 20,
+    marginBottom: 20,
   },
   banners: {
     backgroundColor: '#e6e6e6',
@@ -225,5 +251,11 @@ const styles = StyleSheet.create({
     gap: 20,
     alignItems: 'center',
     borderRadius: 15,
+  },
+  cardCreditCard: {
+    borderColor: 'gray',
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    padding: 20,
   },
 })
