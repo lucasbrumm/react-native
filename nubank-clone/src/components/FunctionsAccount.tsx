@@ -1,9 +1,10 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Fragment } from 'react'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import { IconInterface } from '../interfaces/IconInterface'
 
 export default function FunctionsAccount() {
-  const icons = [
+  const icons: IconInterface[] = [
     {
       id: 1,
       name: 'dollar',
@@ -68,6 +69,7 @@ export default function FunctionsAccount() {
       label: 'Investir',
     },
   ]
+
   return (
     <Fragment>
       {icons.map((icon) => {

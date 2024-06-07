@@ -1,7 +1,8 @@
-interface User {
+export interface User {
   id: number
   cpf: string
-  nome: string
+  imageUser: string
+  name: string
   email: string
   account: Account
   creditCard: CreditCard

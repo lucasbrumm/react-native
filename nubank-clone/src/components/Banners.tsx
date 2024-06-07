@@ -5,11 +5,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
+import { BannersInterface } from '../interfaces/BannerInterface'
 
 export default function Banners() {
   const screenWidth = Dimensions.get('window').width
 
-  const banners = [
+  const banners: BannersInterface[] = [
     {
       id: 1,
       label: 'Você tem até ',
@@ -23,6 +24,7 @@ export default function Banners() {
       label: 'Convide amigos para o Nubank e desbloqueie brasões incríveis.',
     },
   ]
+
   return (
     <ScrollView
       horizontal={true}

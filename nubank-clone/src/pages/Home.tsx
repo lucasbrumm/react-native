@@ -13,10 +13,37 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Banners from '../components/Banners'
 import FunctionsAccount from '../components/FunctionsAccount'
 import { imageUser } from '../common/base64Images'
+import { User } from '../interfaces/UserInterface'
 
 export default function Home() {
+  let user: User = {
+    id: 1,
+    cpf: '123.456.789-00',
+    imageUser: imageUser,
+    name: 'Lucas',
+    email: 'joao@example.com',
+    account: {
+      id: 1,
+      balance: '589,45',
+      agency: '001',
+      accountNumber: '12345-6',
+    },
+    creditCard: {
+      id: 1,
+      cardNumber: 1234567890123456,
+      cardType: true,
+      limitCreditCard: '5000',
+      creditCardBill: '200',
+    },
+    moneyLoan: {
+      id: 1,
+      loanLimit: '10000',
+    },
+  }
+
   const [closeMoney, setCloseMoney] = useState<boolean>(false)
   const [balance, setBalance] = useState<string>('589,48')
+
   return (
     <View style={styles.containerAutenticado}>
       <StatusBar backgroundColor='#820ad1' barStyle='light-content'></StatusBar>
@@ -26,7 +53,7 @@ export default function Home() {
           <Image
             style={styles.imageUser}
             source={{
-              uri: imageUser,
+              uri: user.imageUser,
             }}
           />
           <View style={styles.iconsHeader}>
@@ -46,7 +73,7 @@ export default function Home() {
           </View>
         </View>
         <View style={styles.containerTextUser}>
-          <Text style={styles.textUser}>Olá, usuário</Text>
+          <Text style={styles.textUser}>{`Olá, ${user.name}`}</Text>
         </View>
       </View>
 
@@ -55,7 +82,9 @@ export default function Home() {
           <TouchableOpacity style={styles.accountContainer}>
             <View style={styles.textAccountContainer}>
               <Text style={styles.textAccount}>Conta</Text>
-              <Text style={styles.textAccount}>{`R$ ${balance}`}</Text>
+              <Text
+                style={styles.textAccount}
+              >{`R$ ${user.account.balance}`}</Text>
             </View>
             <FontAwesome name='angle-right' size={15} color={'black'} />
           </TouchableOpacity>

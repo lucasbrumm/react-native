@@ -5,7 +5,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import FirstScreen from './src/pages/FirstScreen'
 import Home from './src/pages/Home'
 
-const Stack = createNativeStackNavigator()
+type RootStackParamList = {
+  Home: undefined
+  FirstScreen: undefined
+}
+
+const Stack = createNativeStackNavigator<RootStackParamList>()
 
 export default function App() {
   return (
