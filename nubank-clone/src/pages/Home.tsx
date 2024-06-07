@@ -14,6 +14,7 @@ import Banners from '../components/Banners'
 import FunctionsAccount from '../components/FunctionsAccount'
 import { imageUser } from '../common/base64Images'
 import { User } from '../interfaces/UserInterface'
+import { CardTypeEnum } from '../enums/CardTypeEnum'
 
 export default function Home() {
   let user: User = {
@@ -30,14 +31,23 @@ export default function Home() {
     },
     creditCard: {
       id: 1,
-      cardNumber: 1234567890123456,
-      cardType: true,
-      limitCreditCard: '5000',
-      creditCardBill: '200',
+      balanceCard: '500,85',
+      cards: [
+        {
+          id: 1,
+          cardNumber: 12345678910,
+          cardType: {
+            id: 1,
+            type: CardTypeEnum.Fisico,
+          },
+        },
+      ],
+      limitCreditCard: '2000,00',
+      creditCardBill: '858,00',
     },
     moneyLoan: {
       id: 1,
-      loanLimit: '10000',
+      loanLimit: '10000,00',
     },
   }
 
@@ -103,7 +113,7 @@ export default function Home() {
 
         <View style={styles.bannerContainer}>
           <View style={styles.banners}>
-            <Banners />
+            <Banners balance={user.moneyLoan.loanLimit} />
           </View>
         </View>
       </ScrollView>

@@ -1,3 +1,7 @@
+import { Account } from './AccountInterface'
+import { CreditCard } from './CreditCardInterface'
+import { MoneyLoan } from './MoneyLoanInterface'
+
 export interface User {
   id: number
   cpf: string
@@ -7,24 +11,4 @@ export interface User {
   account: Account
   creditCard: CreditCard
   moneyLoan: MoneyLoan
-}
-
-interface Account {
-  id: number
-  balance: string
-  agency: string
-  accountNumber: string
-}
-
-interface CreditCard {
-  id: number
-  cardNumber: number
-  cardType: boolean
-  limitCreditCard: string
-  creditCardBill: string
-}
-
-interface MoneyLoan {
-  id: number
-  loanLimit: string
 }

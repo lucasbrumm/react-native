@@ -7,13 +7,13 @@ import {
 } from 'react-native'
 import { BannersInterface } from '../interfaces/BannerInterface'
 
-export default function Banners() {
+export default function Banners({ balance }) {
   const screenWidth = Dimensions.get('window').width
 
   const banners: BannersInterface[] = [
     {
       id: 1,
-      label: 'Você tem até ',
+      label: `Você tem até RS ${balance} disponíveis para empréstimo.`,
     },
     {
       id: 2,
