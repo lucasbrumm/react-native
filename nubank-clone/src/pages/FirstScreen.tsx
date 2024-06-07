@@ -17,6 +17,8 @@ import {
 import { nubankLogo } from '../common/base64Images'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState, setAuthentication } from '../redux/store'
+import { User, UserData } from '../interfaces/UserInterface'
+import { getUser } from '../services/user'
 
 export default function FirstScreen() {
   const isFocused = useIsFocused()
@@ -44,6 +46,7 @@ export default function FirstScreen() {
       })
       .catch((error) => {
         console.log('error touch: ', error)
+        setUsePassword(true)
       })
   }
 

@@ -1,11 +1,17 @@
 import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { User, UserData } from '../interfaces/UserInterface'
 
-interface Authenticated {
+interface State {
   isAuthenticated: boolean
+  userData: UserData | null
 }
 
-const initialState: Authenticated = {
+const initialState: State = {
   isAuthenticated: false,
+  userData: {
+    id: 1,
+    password: '12345678',
+  },
 }
 
 const reducerSlice = createSlice({
@@ -15,10 +21,14 @@ const reducerSlice = createSlice({
     setAuthentication: (state, action: PayloadAction<boolean>) => {
       state.isAuthenticated = action.payload
     },
+    clearReducer: (state) => {
+      state.isAuthenticated = false
+      state.userData = null
+    },
   },
 })
 
-export const { setAuthentication } = reducerSlice.actions
+export const { setAuthentication, clearReducer } = reducerSlice.actions
 
 export const store = configureStore({
   reducer: reducerSlice.reducer,

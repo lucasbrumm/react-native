@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
 import Banners from '../components/Banners'
@@ -17,45 +17,14 @@ import { User } from '../interfaces/UserInterface'
 import { CardTypeEnum } from '../enums/CardTypeEnum'
 import { useSelector } from 'react-redux'
 import { RootState } from '../redux/store'
+import { getUser } from '../services/user'
 
 export default function Home() {
   const isAuthenticated = useSelector(
     (state: RootState) => state.isAuthenticated
   )
 
-  let user: User = {
-    id: 1,
-    cpf: '123.456.789-00',
-    imageUser: imageUser,
-    name: 'Lucas',
-    email: 'joao@example.com',
-    account: {
-      id: 1,
-      balance: '589,45',
-      agency: '001',
-      accountNumber: '12345-6',
-    },
-    creditCard: {
-      id: 1,
-      balanceCard: '500,85',
-      cards: [
-        {
-          id: 1,
-          cardNumber: 12345678910,
-          cardType: {
-            id: 1,
-            type: CardTypeEnum.Fisico,
-          },
-        },
-      ],
-      limitCreditCard: '2000,00',
-      creditCardBill: '858,00',
-    },
-    moneyLoan: {
-      id: 1,
-      loanLimit: '10000,00',
-    },
-  }
+  const [user, setUser] = useState<User>(getUser())
 
   const [closeMoney, setCloseMoney] = useState<boolean>(false)
 
@@ -96,7 +65,7 @@ export default function Home() {
           <Image
             style={styles.imageUser}
             source={{
-              uri: user.imageUser,
+              uri: user?.imageUser,
             }}
           />
           <View style={styles.iconsHeader}>
@@ -112,7 +81,7 @@ export default function Home() {
           </View>
         </View>
         <View style={styles.containerTextUser}>
-          <Text style={styles.textUser}>{`Olá, ${user.name}`}</Text>
+          <Text style={styles.textUser}>{`Olá, ${user?.name}`}</Text>
         </View>
       </View>
 
@@ -133,7 +102,7 @@ export default function Home() {
                 </View>
               ) : (
                 <Text style={styles.textAccount}>
-                  {`R$ ${user.account.balance}`}
+                  {`R$ ${user?.account.balance}`}
                 </Text>
               )}
             </View>
@@ -156,7 +125,7 @@ export default function Home() {
         {/* card banners */}
         <View style={styles.bannerContainer}>
           <View style={styles.banners}>
-            <Banners balance={user.moneyLoan.loanLimit} />
+            <Banners balance={user?.moneyLoan.loanLimit} />
           </View>
         </View>
       </ScrollView>

@@ -10,9 +10,13 @@ import Icon from 'react-native-vector-icons/AntDesign'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import TextInputMask from 'react-native-text-input-mask'
 import { useNavigation } from '@react-navigation/native'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState, setAuthentication } from '../redux/store'
 
 export default function PageUsePassword() {
+  const userData = useSelector((state: RootState) => state.userData)
   const navigation = useNavigation()
+  const dispatch = useDispatch()
   const inputRef = useRef<TextInput>(null)
   const [password, setPassword] = useState<string | undefined>('')
   const [closePassword, setClosePassword] = useState<boolean>(false)
@@ -28,6 +32,13 @@ export default function PageUsePassword() {
 
   const backPage = () => {
     navigation.goBack()
+  }
+
+  const signInPassword = () => {
+    if (userData?.password === password) {
+      dispatch(setAuthentication(true))
+      navigation.navigate('Home')
+    }
   }
 
   useEffect(() => {
@@ -50,13 +61,7 @@ export default function PageUsePassword() {
         <TouchableOpacity style={styles.containerBackIcon} onPress={backPage}>
           <Icon name='arrowleft' size={30} color={'grey'} />
         </TouchableOpacity>
-        <View
-          style={{
-            width: '100%',
-            display: 'flex',
-            alignItems: 'center',
-          }}
-        >
+        <View style={styles.containerTextsCard}>
           <View style={styles.cardTexts}>
             <Text style={styles.textTitle}>Digite sua senha do aplicativo</Text>
             <View style={{ display: 'flex', flexDirection: 'row' }}>
@@ -77,10 +82,22 @@ export default function PageUsePassword() {
                 {handleEyeIcon()}
               </TouchableOpacity>
             </View>
+            <View style={styles.containerForgotPassword}>
+              <TouchableOpacity style={styles.buttonForgotPassword}>
+                <Text style={{ color: 'gray', fontSize: 12 }}>
+                  Esqueci minha senha
+                </Text>
+                <FontAwesome name='angle-right' size={12} color={'gray'} />
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </View>
-      <TouchableOpacity style={styles.okButton} disabled={!sendPassword}>
+      <TouchableOpacity
+        style={styles.okButton}
+        disabled={!sendPassword}
+        onPress={signInPassword}
+      >
         <Text
           style={{
             color: sendPassword ? '#820ad1' : 'grey',
@@ -104,12 +121,18 @@ const styles = StyleSheet.create({
   containerBackIcon: {
     padding: 10,
   },
+  containerTextsCard: {
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+  },
   cardTexts: {
     width: '60%',
     height: 80,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
+    gap: 10,
   },
   textTitle: {
     fontSize: 20,
@@ -126,5 +149,19 @@ const styles = StyleSheet.create({
     padding: 20,
     borderTopWidth: 1,
     borderColor: 'grey',
+  },
+  containerForgotPassword: {
+    display: 'flex',
+    marginTop: 5,
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  buttonForgotPassword: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
   },
 })
