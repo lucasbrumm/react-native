@@ -6,28 +6,22 @@ import {
   View,
 } from 'react-native'
 import { backgroundColor } from '../src/colors/color'
-import recipeData from '../assets/recipes.json'
+import { useEffect, useState } from 'react'
+import { getRecipesFromGit } from '../api/recipes'
+import { IRecipe } from '../interfaces/IRecipes'
 
 export default function Recipes() {
-  // const recipes = [
-  //   {
-  //     id: 1,
-  //     name: 'Bolo de cenoura',
-  //     ingredients: ['cenoura', 'ovo', 'açúcar', 'farinha de trigo'],
-  //   },
-  //   {
-  //     id: 2,
-  //     name: 'Bolo de chocolate',
-  //     ingredients: ['chocolate', 'ovo', 'açúcar', 'farinha de trigo'],
-  //   },
-  //   {
-  //     id: 3,
-  //     name: 'Bolo de laranja',
-  //     ingredients: ['laranja', 'ovo', 'açúcar', 'farinha de trigo'],
-  //   },
-  // ]
+  const [recipes, setRecipes] = useState<IRecipe[]>([])
 
-  const recipes = recipeData.recipes
+  useEffect(() => {
+    getRecipes()
+  }, [])
+
+  async function getRecipes() {
+    const teste = await getRecipesFromGit()
+    setRecipes(teste)
+    return teste
+  }
 
   return (
     <View style={styles.container}>
