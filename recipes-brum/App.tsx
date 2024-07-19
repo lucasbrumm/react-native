@@ -1,25 +1,10 @@
-import { StatusBar } from 'expo-status-bar'
-import { Button, StyleSheet, Text, View } from 'react-native'
-import { backgroundColor, buttonColor } from './src/colors/color'
+import { NavigationContainer } from '@react-navigation/native'
+import Home from './src/pages/Home'
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Button
-        title='Visualizar Receitas'
-        onPress={() => console.log('Button pressed')}
-        color={buttonColor}
-      />
-      <StatusBar style='auto' />
-    </View>
+    <NavigationContainer>
+      <Home />
+    </NavigationContainer>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: backgroundColor,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-})
