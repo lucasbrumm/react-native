@@ -4,7 +4,6 @@ import { backgroundColor, buttonColor } from '../src/colors/color'
 import { Link, Navigator, useNavigation, useRouter } from 'expo-router'
 
 export default function HomeScreen() {
-  const navigation = useNavigation()
   const router = useRouter()
 
   function navigateToRecipes() {

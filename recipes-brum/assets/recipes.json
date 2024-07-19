@@ -1,0 +1,24 @@
+{
+  "recipes": [
+    {
+      "id": 1,
+      "name": "Bolo de cenoura",
+      "ingredients": ["cenoura", "ovo", "açúcar", "farinha de trigo"]
+    },
+    {
+      "id": 2,
+      "name": "Bolo de chocolate",
+      "ingredients": ["chocolate", "ovo", "açúcar", "farinha de trigo"]
+    },
+    {
+      "id": 3,
+      "name": "Bolo de laranja",
+      "ingredients": ["laranja", "ovo", "açúcar", "farinha de trigo"]
+    },
+    {
+      "id": 4,
+      "name": "Bolo de Amendoim",
+      "ingredients": ["laranja", "ovo", "açúcar", "farinha de trigo"]
+    }
+  ]
+}
