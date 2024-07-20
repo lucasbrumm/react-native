@@ -1,7 +1,11 @@
 export interface NewRecipeFields {
   name: string
-  ingredient: string
-  count: string
+  ingredients: Ingredient
   directions: string
   tested: boolean
+}
+
+export interface Ingredient {
+  ingredient: string
+  count: string
 }
