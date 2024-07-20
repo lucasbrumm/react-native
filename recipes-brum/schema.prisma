@@ -11,14 +11,7 @@ datasource db {
 model Recipe {
     id              Int     @id @default(autoincrement())
     name            String
-    ingredients     Ingredient[]
+    ingredients     String
     directions      String
     tested          Boolean @default(false)
-}
-
-model Ingredient {
-  id        Int     @id @default(autoincrement())
-  name      String
-  recipeId  Int
-  Recipe    Recipe  @relation(fields: [recipeId], references: [id])
 }
