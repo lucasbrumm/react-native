@@ -7,9 +7,12 @@ interface NewRecipeScreenProps {
   setInputsNewRecipe: (inputs: NewRecipeFields) => void
   submitForm: () => void
   isAddingIngredient: boolean
+  isAddingDirection: boolean
   setIsAddingIngredient: (isAddingIngredient: boolean) => void
+  setIsAddingDirection: (isAddingDirection: boolean) => void
   clearInputs: () => void
   addNewIngredient: () => void
+  addNewDirection: () => void
 }
 
 function NewRecipeForm({
@@ -17,12 +20,15 @@ function NewRecipeForm({
   setInputsNewRecipe,
   submitForm,
   isAddingIngredient,
+  isAddingDirection,
   setIsAddingIngredient,
+  setIsAddingDirection,
   clearInputs,
   addNewIngredient,
+  addNewDirection,
 }: NewRecipeScreenProps) {
   return (
-    <View>
+    <View style={{ marginBottom: 10 }}>
       <TextInput
         placeholder='Nome da receita'
         value={inputsNewRecipe.name}
@@ -31,7 +37,7 @@ function NewRecipeForm({
         }
         style={styles.input}
       />
-      <View style={{}}>
+      <View style={{ marginBottom: 10 }}>
         {!isAddingIngredient ? (
           <View style={{ width: '100%' }}>
             <Button
@@ -87,14 +93,29 @@ function NewRecipeForm({
           </>
         )}
       </View>
-      <TextInput
-        placeholder='Instruções'
-        value={inputsNewRecipe.directions}
-        onChangeText={(directions) =>
-          setInputsNewRecipe({ ...inputsNewRecipe, directions: directions })
-        }
-        style={styles.input}
-      />
+      {!isAddingDirection ? (
+        <Button
+          title='Adicionar Instrução'
+          color={buttonColor}
+          onPress={() => setIsAddingDirection(true)}
+        />
+      ) : (
+        <>
+          <TextInput
+            placeholder='Instruções'
+            value={inputsNewRecipe.directions}
+            onChangeText={(directions) =>
+              setInputsNewRecipe({ ...inputsNewRecipe, directions: directions })
+            }
+            style={styles.input}
+          />
+          <Button
+            title='Adicionar Instrução'
+            color={buttonColor}
+            onPress={addNewDirection}
+          />
+        </>
+      )}
     </View>
   )
 }

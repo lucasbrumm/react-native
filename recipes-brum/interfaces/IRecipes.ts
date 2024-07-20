@@ -2,6 +2,7 @@ export interface IRecipe {
   id: number
   name: string
   ingredients: Ingredient[]
+  directions: string[]
   tested: boolean
 }
 

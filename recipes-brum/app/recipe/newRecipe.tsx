@@ -16,6 +16,7 @@ import { IRecipe } from '../../interfaces/IRecipes'
 
 export default function NewRecipeScreen() {
   const [isAddingIngredient, setIsAddingIngredient] = useState<boolean>(false)
+  const [isAddingDirection, setIsAddingDirection] = useState<boolean>(false)
   const [inputsNewRecipe, setInputsNewRecipe] = useState<NewRecipeFields>({
     name: '',
     ingredients: {
@@ -29,6 +30,7 @@ export default function NewRecipeScreen() {
     id: 0,
     name: '',
     ingredients: [],
+    directions: [],
     tested: false,
   })
 
@@ -89,6 +91,11 @@ export default function NewRecipeScreen() {
 
   function addNewIngredient() {
     setIsAddingIngredient(false)
+    if (
+      inputsNewRecipe.ingredients.ingredient === '' ||
+      inputsNewRecipe.ingredients.count === ''
+    )
+      return
     setRecipe({
       ...recipe,
       ingredients: [
@@ -102,6 +109,16 @@ export default function NewRecipeScreen() {
     clearInputs()
   }
 
+  function addNewDirection() {
+    setIsAddingDirection(false)
+    if (inputsNewRecipe.directions === '') return
+    setRecipe({
+      ...recipe,
+      directions: [...recipe.directions, inputsNewRecipe.directions],
+    })
+    setInputsNewRecipe({ ...inputsNewRecipe, directions: '' })
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
@@ -112,9 +129,12 @@ export default function NewRecipeScreen() {
         setInputsNewRecipe={setInputsNewRecipe}
         submitForm={addNewRecipe}
         isAddingIngredient={isAddingIngredient}
+        isAddingDirection={isAddingDirection}
         setIsAddingIngredient={setIsAddingIngredient}
+        setIsAddingDirection={setIsAddingDirection}
         clearInputs={clearInputs}
         addNewIngredient={addNewIngredient}
+        addNewDirection={addNewDirection}
       />
       <RecipeCard recipe={recipe} />
       <Button title='Submit' onPress={addNewRecipe} color={buttonColor} />
