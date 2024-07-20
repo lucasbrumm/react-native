@@ -1,0 +1,24 @@
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["reactNative"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./app.db"
+}
+
+model Recipe {
+    id              Int     @id @default(autoincrement())
+    name            String
+    ingredients     Ingredient[]
+    directions      String
+    tested          Boolean @default(false)
+}
+
+model Ingredient {
+  id        Int     @id @default(autoincrement())
+  name      String
+  recipeId  Int
+  Recipe    Recipe  @relation(fields: [recipeId], references: [id])
+}
