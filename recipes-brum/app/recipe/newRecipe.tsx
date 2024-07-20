@@ -51,6 +51,13 @@ export default function NewRecipeScreen() {
     })
 
     clearInputs()
+    setRecipe({
+      id: 0,
+      name: '',
+      ingredients: [],
+      directions: [],
+      tested: false,
+    })
     Keyboard.dismiss()
   }
 
