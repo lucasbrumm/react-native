@@ -1,6 +1,7 @@
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
 import { backgroundColor, buttonColor } from '../colors/color'
 import { NewRecipeFields } from '../../interfaces/INewRecipeFields'
+import { useRef } from 'react'
 
 interface NewRecipeScreenProps {
   inputsNewRecipe: NewRecipeFields
@@ -25,6 +26,7 @@ function NewRecipeForm({
   addNewIngredient,
   addNewDirection,
 }: NewRecipeScreenProps) {
+  const ref = useRef(null)
   return (
     <View style={{ marginBottom: 10 }}>
       <TextInput
@@ -66,6 +68,7 @@ function NewRecipeForm({
                     },
                   })
                 }
+                autoFocus={true}
                 style={styles.inputIngredientCount}
               />
               <TextInput
@@ -95,7 +98,9 @@ function NewRecipeForm({
         <Button
           title='Adicionar Instrução'
           color={buttonColor}
-          onPress={() => setIsAddingDirection(true)}
+          onPress={() => {
+            setIsAddingDirection(true)
+          }}
         />
       ) : (
         <>
@@ -106,6 +111,7 @@ function NewRecipeForm({
               setInputsNewRecipe({ ...inputsNewRecipe, directions: directions })
             }
             style={styles.input}
+            autoFocus={true}
           />
           <Button
             title='Adicionar Instrução'
