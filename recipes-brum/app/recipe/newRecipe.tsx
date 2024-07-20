@@ -36,7 +36,7 @@ export default function NewRecipeScreen() {
 
   async function addNewRecipe() {
     const inputs = checkInputs()
-    console.log('inputs :>> ', inputs)
+
     if (!inputs) {
       return
     }
@@ -60,6 +60,8 @@ export default function NewRecipeScreen() {
         ...inputsNewRecipe,
         ingredients: { ingredient: '', count: '' },
       })
+    } else if (isAddingDirection) {
+      setInputsNewRecipe({ ...inputsNewRecipe, directions: '' })
     } else {
       setInputsNewRecipe({
         name: '',
@@ -124,7 +126,6 @@ export default function NewRecipeScreen() {
         isAddingDirection={isAddingDirection}
         setIsAddingIngredient={setIsAddingIngredient}
         setIsAddingDirection={setIsAddingDirection}
-        clearInputs={clearInputs}
         addNewIngredient={addNewIngredient}
         addNewDirection={addNewDirection}
       />

@@ -10,7 +10,6 @@ interface NewRecipeScreenProps {
   isAddingDirection: boolean
   setIsAddingIngredient: (isAddingIngredient: boolean) => void
   setIsAddingDirection: (isAddingDirection: boolean) => void
-  clearInputs: () => void
   addNewIngredient: () => void
   addNewDirection: () => void
 }
@@ -23,7 +22,6 @@ function NewRecipeForm({
   isAddingDirection,
   setIsAddingIngredient,
   setIsAddingDirection,
-  clearInputs,
   addNewIngredient,
   addNewDirection,
 }: NewRecipeScreenProps) {

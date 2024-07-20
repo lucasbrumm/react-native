@@ -50,7 +50,6 @@ export default function HomeScreen() {
         color={buttonColor}
       />
       <TouchableOpacity onPress={navigateToNewRecipe} style={styles.buttonAdd}>
-        {/* <Text style={styles.stylePlus}>+</Text> */}
         <Ionicons name='add' size={30} color='white' />
       </TouchableOpacity>
       <StatusBar style='auto' />
