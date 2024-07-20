@@ -25,8 +25,6 @@ export default function Recipes() {
   const [recipes, setRecipes] = useState<IRecipe[]>([])
   const [recipesDb, setRecipesDb] = useState<recipesdb[]>([])
 
-  console.log('recipesDb', recipesDb)
-
   useEffect(() => {
     getRecipes()
     getRecipesDb()
