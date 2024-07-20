@@ -1,4 +1,6 @@
 import {
+  Alert,
+  Button,
   FlatList,
   StyleSheet,
   Text,
@@ -11,20 +13,38 @@ import { getRecipesFromGit } from '../api/recipes'
 import { IRecipe } from '../interfaces/IRecipes'
 import { prismaClient } from '../src/services/db'
 
+interface recipesdb {
+  id: number
+  name: string
+  ingredients: string
+  directions: string
+  tested: boolean
+}
+
 export default function Recipes() {
   const [recipes, setRecipes] = useState<IRecipe[]>([])
+  const [recipesDb, setRecipesDb] = useState<recipesdb[]>([])
 
-  const recipesDb = prismaClient.recipe.useFindMany()
   console.log('recipesDb', recipesDb)
 
   useEffect(() => {
     getRecipes()
+    getRecipesDb()
   }, [])
 
   async function getRecipes() {
     const teste = await getRecipesFromGit()
     setRecipes(teste)
     return teste
+  }
+
+  async function getRecipesDb() {
+    const recipesDb = await prismaClient.recipe.findMany()
+    setRecipesDb(recipesDb)
+  }
+
+  function alertRecipes() {
+    Alert.alert('Receitas', JSON.stringify(recipesDb))
   }
 
   return (
@@ -46,6 +66,7 @@ export default function Recipes() {
         )}
         keyExtractor={(item) => item.id.toString()}
       />
+      <Button title='checkar receitas no banco' onPress={alertRecipes}></Button>
     </View>
   )
 }
