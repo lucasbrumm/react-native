@@ -1,6 +1,12 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import { IRecipe } from '../../interfaces/IRecipes'
-import { Ionicons, AntDesign, Feather } from '@expo/vector-icons'
+import { AntDesign, Feather } from '@expo/vector-icons'
 
 interface RecipeCardProps {
   recipe: IRecipe
@@ -8,7 +14,7 @@ interface RecipeCardProps {
 
 function RecipeCard({ recipe }: RecipeCardProps) {
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View
         style={{ paddingVertical: 10, display: 'flex', alignItems: 'center' }}
       >
@@ -25,63 +31,116 @@ function RecipeCard({ recipe }: RecipeCardProps) {
           display: 'flex',
           width: '100%',
           paddingHorizontal: 5,
-          // backgroundColor: 'red',
         }}
       >
-        {recipe.ingredients.map((ingredient, index) => (
+        {recipe.ingredients.length === 0 ? (
           <View
-            key={index}
             style={{
               display: 'flex',
-              flexDirection: 'row',
               alignItems: 'center',
-              justifyContent: 'space-between',
-              padding: 10,
-              gap: 10,
               borderWidth: 0.5,
               borderRadius: 4,
-              marginBottom: 5,
+              padding: 10,
             }}
           >
-            <Text key={ingredient.ingredient}>
-              {ingredient.ingredient} - {ingredient.count}
-            </Text>
-            <View style={{ display: 'flex', flexDirection: 'row', gap: 10 }}>
-              <TouchableOpacity>
-                <Feather name='edit' size={15} color='black' />
-              </TouchableOpacity>
-              <TouchableOpacity>
-                <AntDesign name='delete' size={15} color='black' />
-              </TouchableOpacity>
-            </View>
+            <Text>Sem ingredientes</Text>
           </View>
-        ))}
+        ) : (
+          recipe.ingredients.map((ingredient, index) => (
+            <View
+              key={index}
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: 10,
+                gap: 10,
+                borderWidth: 0.5,
+                borderRadius: 4,
+                marginBottom: 5,
+              }}
+            >
+              <View>
+                <Text key={ingredient.ingredient}>
+                  {ingredient.ingredient} - {ingredient.count}
+                </Text>
+              </View>
+              <View style={{ display: 'flex', flexDirection: 'row', gap: 10 }}>
+                <TouchableOpacity>
+                  <Feather name='edit' size={15} color='black' />
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <AntDesign name='delete' size={15} color='black' />
+                </TouchableOpacity>
+              </View>
+            </View>
+          ))
+        )}
       </View>
-      <Text>Modo de preparo:</Text>
-      {recipe.directions.map((direction, index) => {
-        return (
+      <View
+        style={{ paddingVertical: 10, display: 'flex', alignItems: 'center' }}
+      >
+        <Text>Modo de preparo</Text>
+      </View>
+      <View
+        style={{
+          marginBottom: 10,
+          display: 'flex',
+          width: '100%',
+          paddingHorizontal: 5,
+        }}
+      >
+        {recipe.directions.length === 0 ? (
           <View
-            key={index}
             style={{
               display: 'flex',
-              flexDirection: 'row',
               alignItems: 'center',
-              gap: 10,
+              borderWidth: 0.5,
+              borderRadius: 4,
+              padding: 10,
             }}
           >
-            <Text>
-              {index + 1}º {direction}
-            </Text>
-            <TouchableOpacity>
-              <Feather name='edit' size={15} color='black' />
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <AntDesign name='delete' size={15} color='black' />
-            </TouchableOpacity>
+            <Text>Sem instruções</Text>
           </View>
-        )
-      })}
-    </View>
+        ) : (
+          recipe.directions.map((direction, index) => {
+            return (
+              <View
+                key={index}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  padding: 10,
+                  gap: 10,
+                  borderWidth: 0.5,
+                  borderRadius: 4,
+                  marginBottom: 5,
+                  justifyContent: 'space-between',
+                }}
+              >
+                <View style={{ maxWidth: '85%' }}>
+                  <Text>
+                    {index + 1}º {direction}
+                  </Text>
+                </View>
+                <View
+                  style={{ display: 'flex', flexDirection: 'row', gap: 10 }}
+                >
+                  <TouchableOpacity>
+                    <Feather name='edit' size={15} color='black' />
+                  </TouchableOpacity>
+                  <TouchableOpacity>
+                    <AntDesign name='delete' size={15} color='black' />
+                  </TouchableOpacity>
+                </View>
+              </View>
+            )
+          })
+        )}
+      </View>
+    </ScrollView>
   )
 }
 

@@ -1,11 +1,4 @@
-import {
-  Button,
-  Keyboard,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from 'react-native'
+import { Button, Keyboard, StyleSheet, Text, View } from 'react-native'
 import { backgroundColor, buttonColor } from '../../src/colors/color'
 import { useEffect, useState } from 'react'
 import { prismaClient } from '../../src/services/db'
@@ -43,16 +36,17 @@ export default function NewRecipeScreen() {
 
   async function addNewRecipe() {
     const inputs = checkInputs()
+    console.log('inputs :>> ', inputs)
     if (!inputs) {
       return
     }
 
     await prismaClient.recipe.create({
       data: {
-        name: inputsNewRecipe.name,
-        ingredients: inputsNewRecipe.ingredients.toString(),
-        directions: inputsNewRecipe.directions,
-        tested: inputsNewRecipe.tested,
+        name: recipe.name,
+        ingredients: JSON.stringify(recipe.ingredients, null, 2),
+        directions: recipe.directions.toString(),
+        tested: recipe.tested,
       },
     })
 
@@ -78,14 +72,12 @@ export default function NewRecipeScreen() {
 
   function checkInputs() {
     if (
-      inputsNewRecipe.name === '' ||
-      inputsNewRecipe.ingredients.ingredient === '' ||
-      inputsNewRecipe.ingredients.count === '' ||
-      inputsNewRecipe.directions === ''
+      recipe.name === '' ||
+      recipe.ingredients.length === 0 ||
+      recipe.directions.length === 0
     ) {
       return false
     }
-
     return true
   }
 
@@ -137,7 +129,11 @@ export default function NewRecipeScreen() {
         addNewDirection={addNewDirection}
       />
       <RecipeCard recipe={recipe} />
-      <Button title='Submit' onPress={addNewRecipe} color={buttonColor} />
+      <Button
+        title='Enviar Receita'
+        onPress={addNewRecipe}
+        color={buttonColor}
+      />
     </View>
   )
 }
