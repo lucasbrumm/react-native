@@ -23,8 +23,8 @@ export default function RootLayout() {
         }}
       >
         <Stack.Screen name='index' options={{ headerShown: false }} />
-        <Stack.Screen name='recipes' />
-        <Stack.Screen name='newRecipe' />
+        <Stack.Screen name='recipe/recipes' />
+        <Stack.Screen name='recipe/newRecipe' />
       </Stack>
     </ThemeProvider>
   )
