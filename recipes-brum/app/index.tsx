@@ -11,6 +11,7 @@ import { backgroundColor, buttonColor } from '../src/colors/color'
 import { useRouter } from 'expo-router'
 import { useEffect, useState } from 'react'
 import { initializeDb } from '../src/services/db'
+import { Ionicons } from '@expo/vector-icons'
 
 export default function HomeScreen() {
   const [dbInitialized, setDbInitialized] = useState<boolean>(false)
@@ -49,7 +50,8 @@ export default function HomeScreen() {
         color={buttonColor}
       />
       <TouchableOpacity onPress={navigateToNewRecipe} style={styles.buttonAdd}>
-        <Text style={styles.stylePlus}>+</Text>
+        {/* <Text style={styles.stylePlus}>+</Text> */}
+        <Ionicons name='add' size={30} color='white' />
       </TouchableOpacity>
       <StatusBar style='auto' />
     </View>
