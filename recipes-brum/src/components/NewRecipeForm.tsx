@@ -6,13 +6,23 @@ interface NewRecipeScreenProps {
   inputsNewRecipe: NewRecipeFields
   setInputsNewRecipe: (inputs: NewRecipeFields) => void
   submitForm: () => void
+  isAddingIngredient: boolean
+  setIsAddingIngredient: (isAddingIngredient: boolean) => void
+  clearInputs: () => void
 }
 
 function NewRecipeForm({
   inputsNewRecipe,
   setInputsNewRecipe,
   submitForm,
+  isAddingIngredient,
+  setIsAddingIngredient,
+  clearInputs,
 }: NewRecipeScreenProps) {
+  function addNewIngredient() {
+    setIsAddingIngredient(false)
+    clearInputs()
+  }
   return (
     <View>
       <TextInput
@@ -23,29 +33,61 @@ function NewRecipeForm({
         }
         style={styles.input}
       />
-      <View
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-around',
-        }}
-      >
-        <TextInput
-          placeholder='Ingrediente'
-          value={inputsNewRecipe.ingredient}
-          onChangeText={(ingredient) =>
-            setInputsNewRecipe({ ...inputsNewRecipe, ingredient: ingredient })
-          }
-          style={styles.inputIngredientCount}
-        />
-        <TextInput
-          placeholder='Quantidade'
-          value={inputsNewRecipe.count}
-          onChangeText={(count) =>
-            setInputsNewRecipe({ ...inputsNewRecipe, count: count })
-          }
-          style={styles.inputIngredientCount}
-        />
+      <View style={{}}>
+        {!isAddingIngredient ? (
+          <View style={{ width: '100%' }}>
+            <Button
+              title='Adicionar Ingrediente'
+              color={buttonColor}
+              onPress={() => setIsAddingIngredient(true)}
+            />
+          </View>
+        ) : (
+          <>
+            <View
+              style={{
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+              }}
+            >
+              <TextInput
+                placeholder='Ingrediente'
+                value={inputsNewRecipe.ingredients.ingredient}
+                onChangeText={(ingredient) =>
+                  setInputsNewRecipe({
+                    ...inputsNewRecipe,
+                    ingredients: {
+                      ...inputsNewRecipe.ingredients,
+                      ingredient: ingredient,
+                    },
+                  })
+                }
+                style={styles.inputIngredientCount}
+              />
+              <TextInput
+                placeholder='Quantidade'
+                value={inputsNewRecipe.ingredients.count}
+                onChangeText={(count) =>
+                  setInputsNewRecipe({
+                    ...inputsNewRecipe,
+                    ingredients: {
+                      ...inputsNewRecipe.ingredients,
+                      count: count,
+                    },
+                  })
+                }
+                style={styles.inputIngredientCount}
+              />
+            </View>
+            <Button
+              title='Adicionar Ingrediente'
+              color={buttonColor}
+              onPress={addNewIngredient}
+            />
+          </>
+        )}
       </View>
       <TextInput
         placeholder='Instruções'
@@ -55,7 +97,6 @@ function NewRecipeForm({
         }
         style={styles.input}
       />
-      <Button title='Submit' onPress={submitForm} color={buttonColor} />
     </View>
   )
 }
