@@ -11,15 +11,20 @@ import { useEffect, useState } from 'react'
 import { prismaClient } from '../../src/services/db'
 import { NewRecipeFields } from '../../interfaces/INewRecipeFields'
 import NewRecipeForm from '../../src/components/NewRecipeForm'
+import RecipeCard from '../../src/components/RecipeCard'
 
 export default function NewRecipeScreen() {
   const [inputsNewRecipe, setInputsNewRecipe] = useState<NewRecipeFields>({
     name: '',
-    ingredient: '',
-    count: '',
+    ingredients: {
+      ingredient: '',
+      count: '',
+    },
     directions: '',
     tested: false,
   })
+
+  const [isAddingIngredient, setIsAddingIngredient] = useState<boolean>(false)
 
   async function addNewRecipe() {
     const inputs = checkInputs()
@@ -30,7 +35,7 @@ export default function NewRecipeScreen() {
     await prismaClient.recipe.create({
       data: {
         name: inputsNewRecipe.name,
-        ingredients: inputsNewRecipe.ingredient,
+        ingredients: inputsNewRecipe.ingredients.toString(),
         directions: inputsNewRecipe.directions,
         tested: inputsNewRecipe.tested,
       },
@@ -41,20 +46,26 @@ export default function NewRecipeScreen() {
   }
 
   function clearInputs() {
-    setInputsNewRecipe({
-      name: '',
-      ingredient: '',
-      count: '',
-      directions: '',
-      tested: false,
-    })
+    if (isAddingIngredient) {
+      setInputsNewRecipe({
+        ...inputsNewRecipe,
+        ingredients: { ingredient: '', count: '' },
+      })
+    } else {
+      setInputsNewRecipe({
+        name: '',
+        ingredients: { ingredient: '', count: '' },
+        directions: '',
+        tested: false,
+      })
+    }
   }
 
   function checkInputs() {
     if (
       inputsNewRecipe.name === '' ||
-      inputsNewRecipe.ingredient === '' ||
-      inputsNewRecipe.count === '' ||
+      inputsNewRecipe.ingredients.ingredient === '' ||
+      inputsNewRecipe.ingredients.count === '' ||
       inputsNewRecipe.directions === ''
     ) {
       return false
@@ -72,7 +83,12 @@ export default function NewRecipeScreen() {
         inputsNewRecipe={inputsNewRecipe}
         setInputsNewRecipe={setInputsNewRecipe}
         submitForm={addNewRecipe}
+        isAddingIngredient={isAddingIngredient}
+        setIsAddingIngredient={setIsAddingIngredient}
+        clearInputs={clearInputs}
       />
+      <RecipeCard />
+      <Button title='Submit' onPress={addNewRecipe} color={buttonColor} />
     </View>
   )
 }
