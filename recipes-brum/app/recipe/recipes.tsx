@@ -10,14 +10,14 @@ import {
 import { backgroundColor } from '../../src/colors/color'
 import { useEffect, useState } from 'react'
 import { getRecipesFromGit } from '../../api/recipes'
-import { IRecipe } from '../../interfaces/IRecipes'
+import { Ingredient, IRecipe } from '../../interfaces/IRecipes'
 import { prismaClient } from '../../src/services/db'
 
 interface recipesdb {
   id: number
   name: string
   ingredients: string
-  directions: string
+  directions: string | string[]
   tested: boolean
 }
 
@@ -30,19 +30,43 @@ export default function Recipes() {
     getRecipesDb()
   }, [])
 
+  // async function getRecipes() {
+  //   const teste = await getRecipesFromGit()
+  //   setRecipes(teste)
+  //   return teste
+  // }
+
   async function getRecipes() {
-    const teste = await getRecipesFromGit()
-    setRecipes(teste)
-    return teste
+    const recipesDb: recipesdb[] = await prismaClient.recipe.findMany()
+
+    const recipesAux: IRecipe[] = recipesDb.map((recipe) => {
+      const ingredientsParsed: Ingredient[] = JSON.parse(
+        recipe.ingredients
+      ).map((ing: { ingredient: string; count: string }) => ({
+        ingredient: ing.ingredient,
+        count: ing.count,
+      }))
+
+      const directionsFormatted: string[] =
+        typeof recipe.directions === 'string'
+          ? recipe.directions.split(',')
+          : recipe.directions
+
+      return {
+        id: recipe.id,
+        name: recipe.name,
+        ingredients: ingredientsParsed,
+        directions: directionsFormatted,
+        tested: recipe.tested,
+      }
+    })
+
+    setRecipes(recipesAux)
   }
 
   async function getRecipesDb() {
     const recipesDb = await prismaClient.recipe.findMany()
     setRecipesDb(recipesDb)
-  }
-
-  function alertRecipes() {
-    Alert.alert('Receitas', JSON.stringify(recipesDb))
   }
 
   return (
@@ -64,7 +88,6 @@ export default function Recipes() {
         )}
         keyExtractor={(item) => item.id.toString()}
       />
-      <Button title='checkar receitas no banco' onPress={alertRecipes}></Button>
     </View>
   )
 }
