@@ -12,8 +12,10 @@ import { prismaClient } from '../../src/services/db'
 import { NewRecipeFields } from '../../interfaces/INewRecipeFields'
 import NewRecipeForm from '../../src/components/NewRecipeForm'
 import RecipeCard from '../../src/components/RecipeCard'
+import { IRecipe } from '../../interfaces/IRecipes'
 
 export default function NewRecipeScreen() {
+  const [isAddingIngredient, setIsAddingIngredient] = useState<boolean>(false)
   const [inputsNewRecipe, setInputsNewRecipe] = useState<NewRecipeFields>({
     name: '',
     ingredients: {
@@ -23,8 +25,19 @@ export default function NewRecipeScreen() {
     directions: '',
     tested: false,
   })
+  const [recipe, setRecipe] = useState<IRecipe>({
+    id: 0,
+    name: '',
+    ingredients: [],
+    tested: false,
+  })
 
-  const [isAddingIngredient, setIsAddingIngredient] = useState<boolean>(false)
+  useEffect(() => {
+    setRecipe({
+      ...recipe,
+      name: inputsNewRecipe.name,
+    })
+  }, [inputsNewRecipe])
 
   async function addNewRecipe() {
     const inputs = checkInputs()
@@ -74,6 +87,21 @@ export default function NewRecipeScreen() {
     return true
   }
 
+  function addNewIngredient() {
+    setIsAddingIngredient(false)
+    setRecipe({
+      ...recipe,
+      ingredients: [
+        ...recipe.ingredients,
+        {
+          ingredient: inputsNewRecipe.ingredients.ingredient,
+          count: inputsNewRecipe.ingredients.count,
+        },
+      ],
+    })
+    clearInputs()
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
@@ -86,8 +114,9 @@ export default function NewRecipeScreen() {
         isAddingIngredient={isAddingIngredient}
         setIsAddingIngredient={setIsAddingIngredient}
         clearInputs={clearInputs}
+        addNewIngredient={addNewIngredient}
       />
-      <RecipeCard />
+      <RecipeCard recipe={recipe} />
       <Button title='Submit' onPress={addNewRecipe} color={buttonColor} />
     </View>
   )
