@@ -81,6 +81,10 @@ export default function Recipes() {
         >
           <Text>Carregando...</Text>
         </View>
+      ) : recipes.length === 0 ? (
+        <View>
+          <Text>Nenhuma receita cadastrada</Text>
+        </View>
       ) : (
         <FlatList
           style={{ width: '100%', padding: 10 }}
