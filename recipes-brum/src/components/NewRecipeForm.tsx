@@ -9,6 +9,7 @@ interface NewRecipeScreenProps {
   isAddingIngredient: boolean
   setIsAddingIngredient: (isAddingIngredient: boolean) => void
   clearInputs: () => void
+  addNewIngredient: () => void
 }
 
 function NewRecipeForm({
@@ -18,11 +19,8 @@ function NewRecipeForm({
   isAddingIngredient,
   setIsAddingIngredient,
   clearInputs,
+  addNewIngredient,
 }: NewRecipeScreenProps) {
-  function addNewIngredient() {
-    setIsAddingIngredient(false)
-    clearInputs()
-  }
   return (
     <View>
       <TextInput
