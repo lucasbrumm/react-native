@@ -4,6 +4,7 @@ import {
   FlatList,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native'
@@ -25,6 +26,8 @@ interface recipesdb {
 export default function Recipes() {
   const [recipes, setRecipes] = useState<IRecipe[]>([])
   const [loading, setLoading] = useState<boolean>(true)
+  const [inputSearch, setInputSearch] = useState<string>('')
+  const [listSearch, setListSearch] = useState<IRecipe[]>([])
   const ref = useRef(null)
 
   const router = useRouter()
@@ -69,6 +72,18 @@ export default function Recipes() {
     })
   }
 
+  function onChangeTextInput(text: string) {
+    setInputSearch(text)
+    if (text === '') {
+      setListSearch([])
+      return
+    }
+    const recipesFiltered = recipes.filter((recipe) =>
+      recipe.name.toLowerCase().includes(text.toLowerCase())
+    )
+    setListSearch(recipesFiltered)
+  }
+
   return (
     <View style={styles.container}>
       {loading ? (
@@ -86,24 +101,47 @@ export default function Recipes() {
           <Text>Nenhuma receita cadastrada</Text>
         </View>
       ) : (
-        <FlatList
-          style={{ width: '100%', padding: 10 }}
-          data={recipes}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              onPress={() => goToRecipe(item, item.id)}
-              style={{
-                paddingVertical: 10,
-                paddingHorizontal: 5,
-                borderWidth: 1,
-                marginBottom: 5,
-              }}
-            >
-              <Text>{item.name}</Text>
-            </TouchableOpacity>
-          )}
-          keyExtractor={(item) => item.id.toString()}
-        />
+        <>
+          <FlatList
+            style={{ width: '100%', padding: 10 }}
+            data={listSearch.length > 0 ? listSearch : recipes}
+            ListHeaderComponent={
+              <TextInput
+                placeholder='Pesquisar receita'
+                value={inputSearch}
+                onChangeText={(text) => {
+                  onChangeTextInput(text)
+                }}
+                style={{
+                  width: '100%',
+                  backgroundColor: '#F0F0F0',
+                  borderRadius: 10,
+                  borderWidth: 0.5,
+                  marginBottom: 10,
+                  padding: 10,
+                }}
+              />
+            }
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                onPress={() => goToRecipe(item, item.id)}
+                style={{
+                  paddingVertical: 20,
+                  paddingHorizontal: 20,
+                  borderWidth: 0.5,
+                  borderRadius: 4,
+                  marginBottom: 5,
+                  backgroundColor: '#F0F0F0',
+                }}
+              >
+                <View style={{ display: 'flex', alignItems: 'center' }}>
+                  <Text style={{ fontWeight: 'bold' }}>{item.name}</Text>
+                </View>
+              </TouchableOpacity>
+            )}
+            keyExtractor={(item) => item.id.toString()}
+          />
+        </>
       )}
     </View>
   )
