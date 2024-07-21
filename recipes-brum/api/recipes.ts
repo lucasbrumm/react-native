@@ -18,7 +18,6 @@ export async function getRecipesTesteFromGit(): Promise<IRecipe[]> {
     const response = await axios.get(
       'https://raw.githubusercontent.com/lucasbrumm/recipes/main/recipesTeste.json'
     )
-    console.log('response.data.recipes :>> ', response.data.recipes.length)
     return response.data.recipes
   } catch (error) {
     console.error(error)

@@ -43,12 +43,10 @@ export default function NewRecipeScreen() {
 
     const dataPrisma = {
       name: recipe.name,
-      ingredients: JSON.stringify(recipe.ingredients, null, 2),
-      directions: recipe.directions.toString(),
+      ingredients: JSON.stringify(recipe.ingredients),
+      directions: JSON.stringify(recipe.directions),
       tested: recipe.tested,
     }
-
-    console.log('dataPrisma :>> ', dataPrisma)
 
     await prismaClient.recipe.create({
       data: dataPrisma,

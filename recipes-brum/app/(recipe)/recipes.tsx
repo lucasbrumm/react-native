@@ -38,7 +38,6 @@ export default function Recipes() {
   async function getRecipes() {
     const recipesDb: recipesdb[] = await prismaClient.recipe.findMany()
     const recipesTeste = await getRecipesTesteFromGit()
-    console.log(recipesTeste)
     setLoading(false)
     const recipesAux: IRecipe[] = recipesDb.map((recipe) => {
       const ingredientsParsed: Ingredient[] = JSON.parse(

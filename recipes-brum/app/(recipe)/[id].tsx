@@ -45,6 +45,12 @@ function recipeByIdScreen() {
     }
   }
 
+  function formatDirections(direction: string): string {
+    return direction
+      .replace(/"|\[|\]/g, '')
+      .concat(direction[direction.length - 1] === '.' ? '' : '.')
+  }
+
   if (!recipe) {
     return (
       <View style={styles.container}>
@@ -73,7 +79,6 @@ function recipeByIdScreen() {
         <>
           <Stack.Screen options={{ headerTitle: recipe.name }} />
           <View>
-            <Text>Id da receita {id}</Text>
             <View style={{ marginTop: 10 }}>
               <Text style={{ fontWeight: 'bold' }}>Nome da receita </Text>
               <Text>{recipe.name}</Text>
@@ -97,8 +102,7 @@ function recipeByIdScreen() {
             {recipe.directions.map((direction: string, index: number) => (
               <View key={index} style={{ marginBottom: 10 }}>
                 <Text>
-                  {index + 1}°{' '}
-                  {direction[0] === ' ' ? direction.slice(1) : direction}
+                  {index + 1}° {formatDirections(direction)}
                 </Text>
               </View>
             ))}

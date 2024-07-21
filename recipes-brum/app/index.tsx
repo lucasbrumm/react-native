@@ -10,8 +10,9 @@ import {
 import { backgroundColor, buttonColor } from '../src/colors/color'
 import { useRouter } from 'expo-router'
 import { useEffect, useState } from 'react'
-import { initializeDb } from '../src/services/db'
+import { initializeDb, prismaClient } from '../src/services/db'
 import { Ionicons } from '@expo/vector-icons'
+import { getRecipesTesteFromGit } from '../api/recipes'
 
 export default function HomeScreen() {
   const [dbInitialized, setDbInitialized] = useState<boolean>(false)
@@ -26,11 +27,33 @@ export default function HomeScreen() {
     router.push('/(recipe)/newRecipe')
   }
 
+  async function getRecipesFromGit() {
+    await prismaClient.recipe.deleteMany()
+    const [syncRecipes, recipesDb] = await Promise.all([
+      getRecipesTesteFromGit(),
+      prismaClient.recipe.findMany(),
+    ])
+
+    if (recipesDb.length === 0 || syncRecipes.length !== recipesDb.length) {
+      await prismaClient.recipe.deleteMany()
+      const dataPrisma = syncRecipes.map((recipe) => ({
+        name: recipe.name,
+        ingredients: JSON.stringify(recipe.ingredients),
+        directions: JSON.stringify(recipe.directions),
+        tested: recipe.tested,
+      }))
+      await prismaClient.recipe.createMany({
+        data: dataPrisma,
+      })
+    }
+  }
+
   useEffect(() => {
     const setup = async () => {
       await initializeDb()
       setDbInitialized(true)
     }
+    getRecipesFromGit()
     setup()
   }, [])
 
