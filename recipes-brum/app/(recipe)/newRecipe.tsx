@@ -41,13 +41,17 @@ export default function NewRecipeScreen() {
       return
     }
 
+    const dataPrisma = {
+      name: recipe.name,
+      ingredients: JSON.stringify(recipe.ingredients, null, 2),
+      directions: recipe.directions.toString(),
+      tested: recipe.tested,
+    }
+
+    console.log('dataPrisma :>> ', dataPrisma)
+
     await prismaClient.recipe.create({
-      data: {
-        name: recipe.name,
-        ingredients: JSON.stringify(recipe.ingredients, null, 2),
-        directions: recipe.directions.toString(),
-        tested: recipe.tested,
-      },
+      data: dataPrisma,
     })
 
     clearInputs()
