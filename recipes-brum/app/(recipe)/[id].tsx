@@ -10,6 +10,7 @@ function recipeByIdScreen() {
   const params = useLocalSearchParams()
   const { id } = params
   const [recipe, setRecipe] = useState<IRecipe>()
+  const [loading, setLoading] = useState<boolean>(true)
 
   useEffect(() => {
     getRecipeById()
@@ -24,7 +25,7 @@ function recipeByIdScreen() {
     })
     const recipeConverted = recipesDb ? convertToIRecipe(recipesDb) : null
     if (recipeConverted) setRecipe(recipeConverted)
-    return recipesDb
+    setLoading(false)
   }
 
   function convertToIRecipe(recipe: IRecipesDb): IRecipe {
@@ -54,38 +55,56 @@ function recipeByIdScreen() {
 
   return (
     <View style={styles.container}>
-      <Stack.Screen options={{ headerTitle: recipe.name }} />
-      <View>
-        <Text>Id da receita {id}</Text>
-        <View style={{ marginTop: 10 }}>
-          <Text style={{ fontWeight: 'bold' }}>Nome da receita </Text>
-          <Text>{recipe.name}</Text>
-        </View>
-      </View>
-      <View style={{ marginTop: 10 }}>
-        <Text style={{ fontWeight: 'bold' }}>Ingredientes</Text>
-        <View style={{ marginBottom: 10 }}>
-          {recipe.ingredients.map((ing: Ingredient) => (
-            <View key={ing.ingredient} style={{ marginBottom: 10 }}>
-              <Text>
-                {ing.ingredient} - {ing.count}
-              </Text>
-            </View>
-          ))}
-        </View>
-      </View>
-
-      <View>
-        <Text style={{ fontWeight: 'bold' }}>Modo de preparo</Text>
-        {recipe.directions.map((direction: string, index: number) => (
-          <View key={index} style={{ marginBottom: 10 }}>
-            <Text>
-              {index + 1}°{' '}
-              {direction[0] === ' ' ? direction.slice(1) : direction}
-            </Text>
+      {loading ? (
+        <>
+          <Stack.Screen options={{ headerTitle: 'Receita' }} />
+          <View
+            style={{
+              flex: 1,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Text>Carregando...</Text>
           </View>
-        ))}
-      </View>
+        </>
+      ) : (
+        <>
+          <Stack.Screen options={{ headerTitle: recipe.name }} />
+          <View>
+            <Text>Id da receita {id}</Text>
+            <View style={{ marginTop: 10 }}>
+              <Text style={{ fontWeight: 'bold' }}>Nome da receita </Text>
+              <Text>{recipe.name}</Text>
+            </View>
+          </View>
+          <View style={{ marginTop: 10 }}>
+            <Text style={{ fontWeight: 'bold' }}>Ingredientes</Text>
+            <View style={{ marginBottom: 10 }}>
+              {recipe.ingredients.map((ing: Ingredient) => (
+                <View key={ing.ingredient} style={{ marginBottom: 10 }}>
+                  <Text>
+                    {ing.ingredient} - {ing.count}
+                  </Text>
+                </View>
+              ))}
+            </View>
+          </View>
+
+          <View>
+            <Text style={{ fontWeight: 'bold' }}>Modo de preparo</Text>
+            {recipe.directions.map((direction: string, index: number) => (
+              <View key={index} style={{ marginBottom: 10 }}>
+                <Text>
+                  {index + 1}°{' '}
+                  {direction[0] === ' ' ? direction.slice(1) : direction}
+                </Text>
+              </View>
+            ))}
+          </View>
+        </>
+      )}
     </View>
   )
 }
