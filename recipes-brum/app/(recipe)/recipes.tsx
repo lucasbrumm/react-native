@@ -10,7 +10,6 @@ import {
 } from 'react-native'
 import { backgroundColor } from '../../src/colors/color'
 import { useEffect, useRef, useState } from 'react'
-import { getRecipesFromGit, getRecipesTesteFromGit } from '../../api/recipes'
 import { Ingredient, IRecipe } from '../../interfaces/IRecipes'
 import { prismaClient } from '../../src/services/db'
 import { useRouter } from 'expo-router'
@@ -37,7 +36,6 @@ export default function Recipes() {
 
   async function getRecipes() {
     const recipesDb: recipesdb[] = await prismaClient.recipe.findMany()
-    const recipesTeste = await getRecipesTesteFromGit()
     setLoading(false)
     const recipesAux: IRecipe[] = recipesDb.map((recipe) => {
       const ingredientsParsed: Ingredient[] = JSON.parse(
