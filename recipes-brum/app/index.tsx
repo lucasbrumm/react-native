@@ -12,7 +12,7 @@ import { useRouter } from 'expo-router'
 import { useEffect, useState } from 'react'
 import { initializeDb, prismaClient } from '../src/services/db'
 import { Ionicons } from '@expo/vector-icons'
-import { getRecipesTesteFromGit } from '../api/recipes'
+import { getRecipesGit } from '../api/recipes'
 
 export default function HomeScreen() {
   const [dbInitialized, setDbInitialized] = useState<boolean>(false)
@@ -30,7 +30,7 @@ export default function HomeScreen() {
   async function getRecipesFromGit() {
     await prismaClient.recipe.deleteMany()
     const [syncRecipes, recipesDb] = await Promise.all([
-      getRecipesTesteFromGit(),
+      getRecipesGit(),
       prismaClient.recipe.findMany(),
     ])
 
