@@ -28,13 +28,12 @@ export default function HomeScreen() {
   }
 
   async function getRecipesFromGit() {
-    // await prismaClient.recipe.deleteMany()
     const [syncRecipes, recipesDb] = await Promise.all([
       getRecipesGit(),
       prismaClient.recipe.findMany(),
     ])
 
-    if (recipesDb.length === 0 || syncRecipes.length !== recipesDb.length) {
+    if (recipesDb.length === 0) {
       await prismaClient.recipe.deleteMany()
       const dataPrisma = syncRecipes.map((recipe) => ({
         name: recipe.name,

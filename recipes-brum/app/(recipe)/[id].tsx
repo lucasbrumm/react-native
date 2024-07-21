@@ -33,7 +33,7 @@ function recipeByIdScreen() {
 
     const directionsArray =
       typeof recipe.directions === 'string'
-        ? recipe.directions.split(',')
+        ? recipe.directions.split(`","`)
         : recipe.directions
 
     return {
