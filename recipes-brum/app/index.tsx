@@ -19,11 +19,11 @@ export default function HomeScreen() {
   const router = useRouter()
 
   function navigateToRecipes() {
-    router.push('/recipe/recipes')
+    router.push('/(recipe)/recipes')
   }
 
   function navigateToNewRecipe() {
-    router.push('/recipe/newRecipe')
+    router.push('/(recipe)/newRecipe')
   }
 
   useEffect(() => {

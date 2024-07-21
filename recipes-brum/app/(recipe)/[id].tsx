@@ -1,0 +1,95 @@
+import { Stack, useLocalSearchParams } from 'expo-router'
+import { StyleSheet, Text, View } from 'react-native'
+import { Ingredient, IRecipe } from '../../interfaces/IRecipes'
+import { backgroundColor } from '../../src/colors/color'
+import { Recipe } from '@prisma/client'
+import { useEffect, useState } from 'react'
+import { prismaClient } from '../../src/services/db'
+
+interface recipesdb {
+  id: number
+  name: string
+  ingredients: string
+  directions: string | string[]
+  tested: boolean
+}
+
+function recipeByIdScreen() {
+  const params = useLocalSearchParams()
+  const { id, recipeParam } = params
+
+  // useEffect(() => {}, [])
+
+  // async function getRecipeById() {
+  //   const recipesDb: recipesdb | null = prismaClient.recipe.useFindFirst({
+  //     where: {
+  //       id: Number(id),
+  //     },
+  //   })
+  //   if
+  //   setRecipee(recipesDb)
+  //   return recipesDb
+  // }
+
+  const recipe =
+    typeof recipeParam === 'string'
+      ? JSON.parse(recipeParam)
+      : Array.isArray(recipeParam) && recipeParam.length > 0
+      ? JSON.parse(recipeParam[0])
+      : null
+
+  if (!recipe) {
+    return (
+      <View style={styles.container}>
+        <Text>Receita não encontrada</Text>
+      </View>
+    )
+  }
+
+  return (
+    <View style={styles.container}>
+      <Stack.Screen options={{ headerTitle: recipe.name }} />
+      <View>
+        <Text>Id da receita {id}</Text>
+        <View style={{ marginTop: 10 }}>
+          <Text style={{ fontWeight: 'bold' }}>Nome da receita </Text>
+          <Text>{recipe.name}</Text>
+        </View>
+      </View>
+      <View style={{ marginTop: 10 }}>
+        <Text style={{ fontWeight: 'bold' }}>Ingredientes</Text>
+        <View style={{ marginBottom: 10 }}>
+          {recipe.ingredients.map((ing: Ingredient) => (
+            <View key={ing.ingredient} style={{ marginBottom: 10 }}>
+              <Text>
+                {ing.ingredient} - {ing.count}
+              </Text>
+            </View>
+          ))}
+        </View>
+      </View>
+
+      <View>
+        <Text style={{ fontWeight: 'bold' }}>Modo de preparo</Text>
+        {recipe.directions.map((direction: string, index: number) => (
+          <View key={index} style={{ marginBottom: 10 }}>
+            <Text>
+              {index + 1}°{' '}
+              {direction[0] === ' ' ? direction.slice(1) : direction}
+            </Text>
+          </View>
+        ))}
+      </View>
+    </View>
+  )
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: backgroundColor,
+    padding: 20,
+  },
+})
+
+export default recipeByIdScreen
