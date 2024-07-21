@@ -28,7 +28,7 @@ export default function HomeScreen() {
   }
 
   async function getRecipesFromGit() {
-    await prismaClient.recipe.deleteMany()
+    // await prismaClient.recipe.deleteMany()
     const [syncRecipes, recipesDb] = await Promise.all([
       getRecipesGit(),
       prismaClient.recipe.findMany(),
