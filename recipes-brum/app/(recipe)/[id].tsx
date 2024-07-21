@@ -2,41 +2,47 @@ import { Stack, useLocalSearchParams } from 'expo-router'
 import { StyleSheet, Text, View } from 'react-native'
 import { Ingredient, IRecipe } from '../../interfaces/IRecipes'
 import { backgroundColor } from '../../src/colors/color'
-import { Recipe } from '@prisma/client'
 import { useEffect, useState } from 'react'
 import { prismaClient } from '../../src/services/db'
-
-interface recipesdb {
-  id: number
-  name: string
-  ingredients: string
-  directions: string | string[]
-  tested: boolean
-}
+import { IRecipesDb } from '../../interfaces/IRecipesDb'
 
 function recipeByIdScreen() {
   const params = useLocalSearchParams()
-  const { id, recipeParam } = params
+  const { id } = params
+  const [recipe, setRecipe] = useState<IRecipe>()
 
-  // useEffect(() => {}, [])
+  useEffect(() => {
+    getRecipeById()
+  }, [])
 
-  // async function getRecipeById() {
-  //   const recipesDb: recipesdb | null = prismaClient.recipe.useFindFirst({
-  //     where: {
-  //       id: Number(id),
-  //     },
-  //   })
-  //   if
-  //   setRecipee(recipesDb)
-  //   return recipesDb
-  // }
+  async function getRecipeById() {
+    const idNumber = Number(id)
+    const recipesDb: IRecipesDb | null = await prismaClient.recipe.findUnique({
+      where: {
+        id: idNumber,
+      },
+    })
+    const recipeConverted = recipesDb ? convertToIRecipe(recipesDb) : null
+    if (recipeConverted) setRecipe(recipeConverted)
+    return recipesDb
+  }
 
-  const recipe =
-    typeof recipeParam === 'string'
-      ? JSON.parse(recipeParam)
-      : Array.isArray(recipeParam) && recipeParam.length > 0
-      ? JSON.parse(recipeParam[0])
-      : null
+  function convertToIRecipe(recipe: IRecipesDb): IRecipe {
+    const ingredientsArray: Ingredient[] = JSON.parse(recipe.ingredients)
+
+    const directionsArray =
+      typeof recipe.directions === 'string'
+        ? recipe.directions.split(',')
+        : recipe.directions
+
+    return {
+      id: recipe.id,
+      name: recipe.name,
+      ingredients: ingredientsArray,
+      directions: directionsArray,
+      tested: recipe.tested,
+    }
+  }
 
   if (!recipe) {
     return (
